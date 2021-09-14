@@ -1,0 +1,134 @@
+<div class="order-component">
+  <div class="order-sign">
+    <p>No Changes Allowed</p>
+  </div>
+  <div class="form-Header">
+    <fa-icon [icon]="faShippingFast" class="shipping-order-icon"></fa-icon>
+    <h1>Shipping Details</h1>
+  </div>
+  <form #order="ngForm">
+    <div class="fill-user-details">
+      <button [disabled]="this.usersService.userDetailsAfterLogin.role === -1" (click)="bringUserAddress()"
+          [ngClass]="this.usersService.userDetailsAfterLogin.role === -1 ? 'can-not-submit-button-register' : 'submit-button-register'">
+        Your Details
+      </button>
+    </div>    
+    <div class="order-component-div-inputs">
+      <div>
+        <fa-icon [icon]="faCity" class="city-order-icon"></fa-icon>
+        <select (change)="onChange($event)" [(ngModel)]="this.ordersService.orderDetails.cityToDeliver"
+          name="cityToDeliver" #inputForCity="ngModel" required>
+          <option [ngValue]="undefined" selected disabled >Choose A City...</option>
+          <option [value]="city" *ngFor="let city of this.usersService.cities">{{city}}</option>
+        </select>
+      </div>
+      <div class="div-for-errors">
+        <p *ngIf="inputForCity.touched && inputForCity.errors?.required">
+          You need to choose a city ( this field is mandatory )
+        </p>
+      </div>
+      <div>
+        <fa-icon [icon]="faRoad" class="street-order-icon"></fa-icon>
+        <input type="text" placeholder="Street To Deliver" name="streetToDeliver" required pattern="^[a-zA-Z-]+$"
+          [(ngModel)]="this.ordersService.orderDetails.streetToDeliver" #inputForStreet="ngModel" />
+      </div>
+      <div class="div-for-errors">
+        <p *ngIf="inputForStreet.touched && inputForStreet.errors?.required">
+          Missing - street To Deliver ( this field is mandatory )
+        </p>
+        <p *ngIf="inputForStreet.touched && inputForStreet.errors?.pattern">
+          Your value is not consistent with street name value
+        </p>
+      </div>
+      <div>
+        <fa-icon [icon]="faCalendarAlt" class="date-order-icon"></fa-icon>
+        <input type="date" placeholder="date" name="shippingDate" required (change)="dateAvailability()"
+          [(ngModel)]="this.ordersService.orderDetails.shippingDate" #inputForDate="ngModel" />
+      </div>
+      <div class="div-for-errors">
+        <p *ngIf="inputForDate.touched && inputForDate.errors?.required">
+          Missing - Date To Deliver ( this field is mandatory )
+        </p>
+        <p *ngIf="this.isDateAvailable === 3">
+          Sorry, this date is not available
+        </p>
+      </div>
+    </div>
+    <div class="credit-card-order-h1">
+      <fa-icon [icon]="faCreditCard" class="credit-card-order-icon"></fa-icon>
+      <h1>Credit Card Details</h1>
+    </div>
+    <div class="order-component-div-inputs-card">
+      <div class="credit-card-1">
+        <div>
+            <select (change)="valueForCardCompany($event)" name="cardCompany" #inputForCompany = "ngModel" required
+            [(ngModel)]="this.ordersService.orderDetails.cardCompany">
+              <option [ngValue]="undefined" selected disabled >Card Company</option>
+              <option [value]="company" *ngFor="let company of this.ordersService.cardCompany">{{company}}</option>
+            </select>
+          </div>
+        <div>
+          <input type="number" placeholder="Credit Card" name="creditCardNumber" #inputForCreditCardNumber = "ngModel" 
+            [(ngModel)]="this.ordersService.orderDetails.creditCardNumber" required
+            [disabled]="didChooseCardCompany()" [pattern]="returnPattern()" />
+        </div>
+      </div>
+      <div class="div-for-errors">
+        <p *ngIf="inputForCreditCardNumber.touched && inputForCreditCardNumber.errors?.required">
+          Missing - street To Deliver ( this field is mandatory )
+        </p>
+        <p *ngIf="inputForCreditCardNumber.touched && inputForCreditCardNumber.errors?.pattern">
+          Your value is not consistent with card number
+        </p>
+        <p *ngIf="inputForCompany.touched && inputForCompany.errors?.required">
+          Missing - street To Deliver ( this field is mandatory )
+        </p>
+        <p *ngIf="inputForCompany.touched && inputForCompany.errors?.pattern">
+          Your value is not consistent with street name value
+        </p>
+      </div>
+      <div class="credit-card-2">
+        <div class="credit-card-1-div">
+          <div>
+            <select name="month" #inputForMonth = "ngModel" required [(ngModel)]="this.ordersService.orderDetails.month"
+                required >
+              <option  [ngValue]="undefined" selected disabled >Month</option>
+              <option [value]="month" *ngFor="let month of this.ordersService.months">{{month}}</option>
+            </select>
+          </div>
+          <div>
+            <select name="year" #inputForYear = "ngModel" required [(ngModel)]="this.ordersService.orderDetails.year"
+                 required>
+              <option  [ngValue]="undefined" selected disabled>Year</option>
+              <option [value]="year" *ngFor="let year of this.ordersService.years">{{year}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="credit-card-2-div">
+          <div>
+            <input type="text" placeholder="3 Digit On The Back" name="cardLastDigits" required pattern="\d{3}"
+              [(ngModel)]="this.ordersService.orderDetails.cardLastDigits" #inputForCard="ngModel" />
+          </div>
+
+        </div>
+      </div>
+      <div class="div-for-errors">
+        <p *ngIf="inputForCard.touched && inputForCard.errors?.required">
+          Missing - three digit on the back ( this field is mandatory )
+        </p>
+        <p *ngIf="inputForCard.touched && inputForCard.errors?.pattern">
+          Your value is not consistent with three digit
+        </p>
+        <p *ngIf="inputForMonth.touched && inputForMonth.errors?.required">
+          Missing - Month ( this field is mandatory )
+        </p>
+        <p *ngIf="inputForYear.touched && inputForYear.errors?.required">
+          Missing - Year ( this field is mandatory )
+        </p>
+      </div>
+    </div>
+    <button type="submit" [disabled]="order.form.invalid || this.isDateAvailable === 3" value="register"
+      [ngClass]="order.form.invalid || this.isDateAvailable === 3? 'can-not-submit-button-register' : 'submit-button-register'"
+      (click)="activateModalForMessageOrder()">ORDER</button>
+  </form>
+</div>

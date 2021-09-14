@@ -1,0 +1,69 @@
+<div class="products">
+  <aside class="products-aside">
+    <ng-container *ngIf="this.usersService.userDetailsAfterLogin.role == 1 ; then isAdmin; else notAdmin"></ng-container>
+  </aside>
+  <main class="products-main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
+
+<ng-template #notAdmin>
+  <div class="shopping-cart">
+    <header class="products-cart-header">
+      <div class="products-cart-header-div">
+        <div class="products-cart-header-hello">
+          <mat-icon class="user-products">person_outline</mat-icon>
+          <p>Hello</p>
+        </div>
+        <div *ngIf="this.usersService.userDetailsAfterLogin.role == 0; then isUser; else notRegister"></div>
+      </div>
+      <h3>Your Shopping Cart</h3>
+    </header>
+    <section class="delete-all-products" *ngIf="this.stateService.placeholderText.includes('Search In Products')">
+      <mat-icon class="remove-all-products">remove_shopping_cart</mat-icon>
+      <p>Delete All Products</p>
+    </section>
+    <main class="products-cart-main" [ngStyle]="{'display': displayForCart}">
+      <app-shopping-cart-card *ngFor="let product of this.shoppingCartItemsService.currentCart"
+        [cartItems]="this.shoppingCartItemsService.currentCart" [oneItemOfCart]="product">
+      </app-shopping-cart-card>
+    </main>
+    <footer class="products-cart-footer">
+      <div class="products-cart-footer-div1" (click)="toggleCart()">
+        <mat-icon class="arrow-up-products">{{displayForCart==='block' ? 'arrow_drop_up' : 'arrow_drop_down'}}</mat-icon>
+      </div>
+      <div class="products-cart-footer-div2">
+        <mat-icon class="shopping-cart-products">shopping_cart</mat-icon>
+        <div *ngIf ="this.shoppingCartItemsService.currentCart !== undefined">
+          <p>{{this.shoppingCartItemsService.currentCart[0]?.numOfItems}}</p>
+        </div>
+      </div>
+      <div class="products-cart-footer-div3" *ngIf ="this.shoppingCartItemsService.currentCart !== undefined">
+        <p>{{this.shoppingCartItemsService.currentCart[0]?.finalPrice | currency:"USD"}}
+        </p>
+        <p>Delivery included</p>
+      </div>
+      <div class="products-cart-footer-div4"*ngIf="this.stateService.placeholderText.includes('Search In Products')">
+        <p  routerLink="/products-and-forms/products/order">Payment</p>
+      </div>
+    </footer>
+  </div>
+</ng-template>
+
+<ng-template #isAdmin>
+  <app-edit-product *ngIf="this.stateService.addingOrEditing === 'editing'" ></app-edit-product>    
+  <app-add-product *ngIf="this.stateService.addingOrEditing === 'adding'"></app-add-product>
+</ng-template>
+
+<ng-template #isUser>
+  <p class="products-cart-header-hello-p">{{this.usersService.userDetailsAfterLogin.userName}}</p>
+</ng-template>
+
+<ng-template #notRegister>
+  <p class="products-cart-header-hello-p">Important Guest</p>
+  <a class="products-cart-header-hello-a" routerLink="/products-and-forms/forms/login"
+  *ngIf="this.stateService.placeholderText.includes('Search In Products')"
+  >Log-In</a>
+</ng-template>
+
+

@@ -1,0 +1,5 @@
+<div class="search-component">
+    <div class="product-card-container" *ngIf="this.productsService.searchResultsServer">
+        <app-product-card *ngFor="let product of this.productsService.searchResultsServer" [product]="product"></app-product-card>
+    </div>
+</div>

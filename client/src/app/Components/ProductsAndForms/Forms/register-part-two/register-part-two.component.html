@@ -1,0 +1,70 @@
+<div class="register-part-two">
+    <div>
+        <h1>Sign-In</h1>
+    </div>
+    <form #registerPartTwo="ngForm">
+        <div class="register-part-two-buttons">
+            <button type="text">STEP 01</button>         
+            <button type="text">STEP 02</button>             
+        </div>
+        <div class="register-part-two-div-inputs">
+            <div>
+                <fa-icon [icon]="faUserCog" class="register-part-two-user-first-name"></fa-icon>
+                <input name="firstName" type="text" placeholder="First Name" required pattern="^[a-zA-Z-]+$"
+                 [(ngModel)]="this.usersService.registerCompletedDetails.firstName" #inputForFirstName="ngModel" />                
+            </div>
+            <div class="div-for-errors">
+                <p *ngIf="inputForFirstName.touched && inputForFirstName.errors?.required">
+                    Missing - first name ( this field is mandatory )
+                </p>
+                <p *ngIf="inputForFirstName.touched && inputForFirstName.errors?.pattern">
+                    Your value is not consistent with name value
+                </p>                 
+            </div>
+            <div>
+                <fa-icon [icon]="faUserCog" class="register-part-two-user-last-name"></fa-icon>
+                <input name="lastName" type="text" placeholder="Last Name" required pattern="^[a-zA-Z-]+$"
+                [(ngModel)]="this.usersService.registerCompletedDetails.lastName" #inputForLastName="ngModel"/>                   
+            </div>
+            <div class="div-for-errors">
+                <p *ngIf="inputForLastName.touched && inputForLastName.errors?.required">
+                    Missing - last name ( this field is mandatory )
+                </p>
+                <p *ngIf="inputForLastName.touched && inputForLastName.errors?.pattern">
+                    Your value is not consistent with name value
+                </p>                 
+            </div>            
+            <div>
+                <fa-icon [icon]="faCity" class="register-part-two-city"></fa-icon>
+                <select (change)="onChange($event)" [(ngModel)]="this.usersService.registerCompletedDetails.city" name="city"
+                #inputForCity="ngModel" required>
+                    <option [ngValue]="undefined" selected disabled>Choose A City...</option>
+                    <option *ngFor="let city of this.usersService.cities">{{city}}</option>
+                </select>                 
+            </div>
+            <div class="div-for-errors">
+                <p *ngIf="inputForCity.touched && inputForCity.errors?.required">
+                    You need to choose a city ( this field is mandatory )
+                </p>                
+            </div>
+            <div>
+                <fa-icon [icon]="faRoad" class="register-part-two-street"></fa-icon>
+                <input type="text" placeholder="Street" name="street" required pattern="^[a-zA-Z-]+$"
+                [(ngModel)]="this.usersService.registerCompletedDetails.street" #inputForStreet="ngModel"/>                
+            </div>
+            <div class="div-for-errors">
+                <p *ngIf="inputForStreet.touched && inputForStreet.errors?.required">
+                    Missing - street ( this field is mandatory )
+                </p>
+                <p *ngIf="inputForStreet.touched && inputForStreet.errors?.pattern">
+                    Your value is not consistent with street name value
+                </p>                 
+            </div>
+        </div>
+        <button routerLink="/products-and-forms/forms/register-part-one" class="back-button-register" type="button">BACK</button>  
+        <button type="submit" [disabled]="registerPartTwo.form.invalid" value="register"
+        [ngClass]="registerPartTwo.form.invalid ? 'can-not-submit-button-register' : 'submit-button-register'"
+         (click)="registerWithFullDetails()">SUBMIT</button>        
+    </form>
+</div>
+

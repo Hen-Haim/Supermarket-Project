@@ -1,0 +1,63 @@
+<div class="add-product">
+    <div>
+        <h1>Adding A Product</h1>
+    </div>
+    <form #addProductForm="ngForm">
+        <div class="add-product-div-inputs">
+            <div>
+                <fa-icon [icon]="faCarrot" class="add-product-user-icon"></fa-icon>
+                <input type="text" placeholder="Product Name" [(ngModel)]="newProductDetails.name" #inputForProductName="ngModel"
+                required pattern="^(\b[A-Z]\w*\s*)+$"
+                name="name"
+                /> 
+            </div>
+            <div class="div-for-errors">
+                <p *ngIf="inputForProductName.touched && inputForProductName.errors?.required">
+                    Missing - name ( this field is mandatory )
+                </p>
+                <p *ngIf="inputForProductName.touched && inputForProductName.errors?.pattern">
+                    Every first letter on a word needs to be capitalized
+                </p>                 
+            </div>
+            <div>
+                <fa-icon [icon]="faArchive" class="add-product-user-icon"></fa-icon>
+                <input name="nameCategory" [value] = "this.productsService.productDetails.nameCategory" type="text"[(ngModel)]="newProductDetails.nameCategory"
+                 #selectForProductCategoryName="ngModel" (keyup)="onInputChange($event)" [required] = "this.productsService.productDetails.nameCategory === undefined">
+            </div>
+            <div class="div-for-errors">
+                <div class="suggestions-div" >
+                    <span>Suggestions:</span>
+                    <select (change)="onChange($event)">
+                        <option disabled value="">Choose Category...</option>
+                        <option *ngFor="let category of this.productsService.categories">{{category}}</option>
+                    </select>                      
+                </div>
+                <p *ngIf="this.productsService.productDetails.nameCategory === undefined ">
+                    Missing - Category ( this field is mandatory )
+                </p>
+            </div>
+            <div>
+                <fa-icon [icon]="faDollarSign" class="add-product-password-icon"></fa-icon>
+                <input type="number" placeholder="Price" name="price"
+                [(ngModel)]="newProductDetails.price" #inputForPrice="ngModel" required 
+                pattern="^[+]?\d+(\.\d{1,2})?$"/>                
+            </div>
+            <div class="div-for-errors">
+                <p *ngIf="inputForPrice.touched && inputForPrice.errors?.required">
+                    Missing - price ( this field is mandatory )
+                </p>
+                <p *ngIf="inputForPrice.touched && inputForPrice.errors?.pattern">
+                    The price should be a positive number and have two decimal places
+                </p>                 
+            </div>
+            <div>
+                <fa-icon [icon]="faImage" class="add-product-password-icon"></fa-icon>
+                <input name="image" type="file" accept="image/*" required/>                
+            </div>
+            <!-- [(ngModel)]="newProductDetails.picture"  required -->
+        </div>
+        <button type="submit" [disabled]="addProductForm.form.invalid && selectForProductCategoryName.pristine" (click)="addingNewProduct()"
+        [ngClass]="addProductForm.form.invalid ? 'can-not-submit-button-add-product' : 'submit-button-add-product'"
+        >SUBMIT</button>        
+    </form>
+</div>

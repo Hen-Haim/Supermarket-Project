@@ -1,0 +1,5 @@
+<div class="product-menu" *ngIf="this.productsService.categories.length > 0">
+    <app-category-card *ngFor="let category of this.productsService.categories; let indexOfElement = index"
+      [indexOfElement]="indexOfElement">
+    </app-category-card>
+</div>

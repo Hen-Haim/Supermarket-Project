@@ -1,0 +1,109 @@
+.products-and-form, .app, body, html{
+    height:max-content;
+    width:100%;
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+
+.products-and-form{
+    display: grid;
+    grid-template-rows: 190px max-content;
+    grid-template-columns:repeat(12,1fr);
+    color:#FDF7DF;
+    font-family: calibri;
+    font-size:1.8vw;
+}
+
+.products-and-form-header{
+    height: max-content;
+    grid-column:span 12;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.products-and-form-headline{
+    flex: 2.3;
+}
+
+.products-and-form-headline>h1{
+    margin: 15px 0 8px 0;
+    font-size: 42px;
+    font-weight: 900;
+    text-shadow: 4px 4px 4px #843c0cc9,-1px -1px 1px #843c0c44;
+}
+
+
+.products-and-form-headline>h2{
+    margin: 2px 0 20px 0;
+    font-weight: 100;
+    font-size: 28px;
+    text-shadow: 2px 2px 2px #843c0cc9,1px 1px 1px #843c0c44;
+}
+
+.products-and-form-headline-search-div{
+    height:60px;
+    background-color: #D6DCE5;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+}
+
+.products-and-form-headline-search-div>div{
+    height:70%;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.products-and-form-headline-search-div>div>input{
+    height: 47%;
+    width:530px;
+    border:none;
+    /* font-size: 15px; */
+    padding:8px 11px;
+}
+
+.products-and-form-headline-search-div>div>button{
+    height: 87%;
+    width:50px;
+    margin:0 0 0 0;
+    border:none;
+    border: 1px #FDF7DF solid;
+
+    /* font-size: 15px; */
+    padding:6px 11px;
+    color:#FDF7DF;
+    background-color: #843C0C;
+    cursor: pointer;
+}
+
+.go-back-to-home-div{
+    margin: 50px 0 0 0 ;
+    position: absolute;
+    display: flex;
+    color:#44546A;
+    top:0;
+    left:10px;
+    font-size: 25px;
+    width:max-content;
+    cursor: pointer;
+}
+
+.go-back-to-home-div:hover{
+    color:#D6DCE5;
+}
+
+.go-back-to-home-div>h5{
+    margin: 0 0 0 5px;
+}
+
+.products-and-form-main{
+    height: max-content;
+    grid-column:span 12;
+}

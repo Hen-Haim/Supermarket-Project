@@ -1,0 +1,26 @@
+<div class="products-and-form">
+  <header class="products-and-form-header">
+    <div class="products-and-form-headline">
+      <h1>Choose Wide</h1>
+      <h2>Abundant Supply To All Your Needs </h2>
+    </div>
+    <div class="products-and-form-headline-search-div">
+      <div>
+        <input [placeholder]="this.stateService.placeholderText" type="text" [(ngModel)]="this.productsService.searchTyping" >
+        <button (click)="openSearchComponent()">
+          <mat-icon>search</mat-icon>
+        </button>
+        <button>
+          <mat-icon routerLink="/products-and-forms/products/menu">forward</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div routerLink="/home" class="go-back-to-home-div">
+      <mat-icon>arrow_back</mat-icon>
+      <h5>Back To Home</h5>
+    </div>
+  </header>
+  <main class="products-and-form-main">
+    <router-outlet></router-outlet>
+  </main>
+</div>

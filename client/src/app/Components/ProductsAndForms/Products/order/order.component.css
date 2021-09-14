@@ -1,0 +1,233 @@
+.order-component{
+    height:850px;
+    width:47%;
+    background-color:#fdf7df93;
+    display: flex;
+    flex-direction: column;
+    margin-left:53%;
+    color:black;
+
+}
+
+.order-sign{
+    border-radius: 50%;
+    width:80px;
+    height:80px;
+    border: #CDB2A3 8px solid;
+    position:fixed;
+    padding:5px;
+    top:190px;
+    left:300px;
+    background-color: white;
+    z-index: 20000;
+    text-align: center;
+    font:Arial ;
+    font-weight: 900;
+    color:#7c3610d0;
+    box-shadow: 1px 1px 5px 2px rgb(75, 75, 75);
+}
+
+.order-sign > p{
+    margin:0;
+    padding:0;
+    font-size:19px;
+    text-shadow: 2px 2px 1px #CDB2A3 ;
+}
+
+.form-Header{
+    margin:0;
+    padding:20px 0 0 0;
+    text-align: center;
+}
+
+.fill-user-details{
+    margin:10px 0 15px 0;
+    height:max-content;
+}
+
+.fill-user-details>button{
+    margin:0;
+    padding:10px;
+    color:#fdf7df;
+}
+
+.credit-card-order-h1{
+    margin:20px 0 0 0;
+    padding:20px 0 20px 0;
+    text-align: center;
+}
+
+.form-Header>h1, form>div>h1{
+    margin:15px 0 10px 10px ;
+    font-size: 25px;
+    display: inline-block;
+    font-stretch: extra-expanded;
+}
+
+form{
+    flex:8;
+    align-items: center;
+    height:50%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.order-component-div-inputs{
+    margin: 0 0 0 0;
+    border:solid #b4c7e76b 1px;
+    align-self: center;
+    width:70%;
+    padding-top:10px;
+    height:250px;
+    display: flex;
+    flex-direction: column;
+    box-shadow:  3px 3px 8px 3px #843c0c9a ;
+}
+
+.order-component-div-inputs>div{
+    margin:13px 0 13px 0 ;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.order-component-div-inputs>div>select{
+    border:solid #b4c7e76b 1px;
+    box-shadow: 3px 3px 8px 1px #843c0c9a ;
+    margin-left:10px ;
+    height:25px;
+    width:65%;
+}
+
+.order-component-div-inputs>div>input{
+    border:solid #b4c7e76b 1px;
+    box-shadow: 3px 3px 8px 1px #843c0c9a ;
+    margin-left:10px ;
+    height:22px;
+    width:63%;
+}
+
+.order-component-div-inputs-card{
+    /* margin-bottom:100px; */
+    display: flex;
+    flex-direction: column;    
+    margin: 0;
+    border:solid #b4c7e76b 1px;
+    align-self: center;
+    width:82%;
+    height:200px;
+    box-shadow:  3px 3px 8px 3px #843c0c9a ;
+}
+
+.credit-card-1, .credit-card-2{
+    display: flex;
+    flex-direction: row;  
+    align-items: center;
+    justify-content: center; 
+    margin: 0 0 0 0;
+}
+
+.credit-card-1>div, .credit-card-2>div{
+    height:35px;
+    width:75%;
+    margin: 15px 0 0 0 ;
+}
+
+.order-component-div-inputs-card>div>div>input, .credit-card-1-div>div>select, 
+.credit-card-2-div>div>input, .credit-card-1>div>select{
+    border:solid #b4c7e76b 1px;
+    box-shadow: 3px 3px 8px 1px #843c0c9a ;
+    margin-left:0 ;
+    height:22px;
+    width:85%;
+}
+
+.credit-card-1-div>div>select:nth-child(2), .credit-card-1-div>div>select:nth-child(1){
+    /* flex:1; */
+    border:solid #b4c7e76b 1px;
+    box-shadow: 3px 3px 8px 1px #843c0c9a ;
+    margin:0 ;
+    height:22px;
+}
+
+.credit-card-1-div>div:nth-child(1){
+    width:85px;
+}
+
+.credit-card-1-div>div:nth-child(2){
+    width:79px;
+}
+
+.credit-card-1-div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+/* 
+.credit-card-2-div>div>input{
+    height:22px;
+    width:85%; 
+    border:solid #b4c7e76b 1px;
+    box-shadow: 3px 3px 8px 1px #843c0c9a ;   
+} */
+
+.order-component-user-icon, .order-component-password-icon{
+    font-size: 22px;
+}
+
+/* form>button{
+    margin: 20px 0 20px 0 ;
+    padding:10px;
+    background-color:#44546A;
+    color:#fdf7df;
+    cursor: pointer;
+}
+
+
+form>button:hover{
+    background-color:#44546a69;   
+} */
+
+form>button{
+    position: absolute;
+    bottom:0;
+    right:0;
+    margin: 0 40px 40px 0 ;
+    padding:10px;
+    color:#fdf7df;
+}
+
+.can-not-submit-button-register{
+    background-color:#8aa5ca80;
+}
+
+.back-button-register:hover{
+    background-color:#44546a69;   
+}
+
+.div-for-errors{
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    text-align: initial;
+}
+
+.div-for-errors p{
+    margin:0 0 0 20px;
+    color:red;
+    font-size:13px;
+    font-family:  Arial, sans-serif;
+}
+
+form>.submit-button-register{
+    background-color:#44546A;
+    cursor: pointer;
+}
+
+
+form>.submit-button-register:hover{
+    background-color:#44546a69;   
+}

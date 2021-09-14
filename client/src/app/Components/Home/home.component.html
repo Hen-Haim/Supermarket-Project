@@ -1,0 +1,158 @@
+<div class="home">
+    <header class="header-and-nav-home">
+        <nav class="home-nav">
+            <div class="home-nav-left">
+                <fa-icon [icon]="faUser" class="user-icon"></fa-icon>
+                <div>Hello {{name}}</div>
+            </div>             
+            <div class="home-nav-right">
+                <a (click)="isLogOut()" >
+                    {{this.usersService.userDetailsAfterLogin.role ===-1 ?'Login' : 'LogOut'}}
+                </a>
+                <a routerLink="/products-and-forms/forms/register-part-one">Register</a>
+                <a routerLink="/contact-us">Contact Us</a>
+                <a routerLink="/about-us">About Us</a>
+            </div>                     
+        </nav>
+        <div class="home-header">
+            <div class="home-image-text">
+                <h1>Choose Wide</h1>
+                <h2>Abundant Supply To All Your Needs</h2>
+                <button [class]="firstButtonColor" [disabled]="disable()" name={{this.shoppingCartItemsService.firstButtonForHome}} (click) ="choosingAStatusForCart($event)">{{this.shoppingCartItemsService.firstButtonForHome}}</button>
+                <button class="shopping-button-1" name={{this.shoppingCartItemsService.secondButtonForHome}} (click) ="choosingAStatusForCart($event)">
+                    {{this.shoppingCartItemsService.secondButtonForHome}}
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <div class="first-row-home">
+            <div class="first-row-home-left">
+                <div class="top-rectangular">
+                    <div class="top-rectangular-container">
+                        <div class="top-rectangular-container-one">Return policy guarantied</div>
+                        <div class="top-rectangular-container-two">Cheapest Delivery</div>
+                        <div class="top-rectangular-container-three">One Of The Best Web!</div>
+                        <div class="top-rectangular-container-four">Best Service To Offer!</div>                        
+                    </div>
+                </div>
+                <div class="bottom-rectangular">
+                    Here At Choose Wide, we guarantied best experience,
+                    Be it the Services we provide or the non stop care we offer, We can tell you with certainty that you will enjoy it here! 
+                    This site was built with all the love and happiness one could give, So if You can use it as such it would be appreciated
+                </div>
+            </div>
+            <div class="circle-container">
+                <div class="orange-circle"></div>
+                <div class="orange-circle-white"></div>
+                <div class="orange-circle-text">Users</div>
+                <div class="orange-circle-number"></div>
+                <div class="orange-circle-number-text">{{usersCircle}}</div>
+                <div class="yellow-circle"></div>
+                <div class="yellow-circle-white"></div>
+                <div class="yellow-circle-text">Available Products</div>
+                <div class="yellow-circle-number"></div>
+                <div class="yellow-circle-number-text">{{productsCircle}}</div>
+                <div class="green-circle"></div>
+                <div class="green-circle-white"></div>
+                <div class="green-circle-text">Orders On The Web</div>
+                <div class="green-circle-number"></div>
+                <div class="green-circle-number-text">{{ordersCircle}}</div>
+            </div>
+        </div>
+        <div class="second-row-home">
+            <div class="second-row-home-left">
+                <div class="circle-header-for-cards-home">
+                    <div class="second-row-home-left-circle">
+                        <div class="second-row-home-left-circle-white">
+                            <div class="second-row-home-left-circle-text">New</div>                          
+                        </div>                        
+                    </div>
+                </div>
+                <div class="rectangulars-cards-home-container">
+                    <!-- here come 6 cards for new items-->
+                    <app-new-card *ngFor="let newItem of this.newItems"
+                     [oneNewItem]="newItem">
+                  </app-new-card>
+                </div>
+           </div>
+            <div class="second-row-home-middle">
+                <h1>We Have High Quality Products</h1>
+                <h2>Fastest, Safest And more secure experience than ever before!</h2>
+                <div class="triangle-one"></div>
+                <div class="triangle-two"></div>
+            </div>
+            <div class="second-row-home-right">
+                <div class="circles-cards-home-container">
+                    <!-- here come 3 cards for popular items-->
+                    <app-popular-card *ngFor="let popularItem of this.popularItems;let indexOfElement = index;"
+                    [onePopularItem]="popularItem" [indexOfElement] = "indexOfElement">
+                 </app-popular-card>
+                </div>
+                <div class="rectangular-header-for-cards-home">
+                    <div class="second-row-home-right-rectangular">
+                        <div class="second-row-home-right-rectangular-white">
+                            <div class="second-row-home-right-rectangular-text">Most Popular</div>                         
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="third-row-home" *ngIf="this.productsService.categories.length > 0">
+            <!-- here are the cards for all categories-->
+            <app-category-card *ngFor="let category of this.productsService.categories; let indexOfElement = index"
+                [indexOfElement]="indexOfElement">
+            </app-category-card>
+        </div>
+    </main>
+    <footer class="home-footer">
+        <div class="footer-top">
+            <h3>On Our Site:</h3>
+            <div class="footer-main-links">
+                <div>
+                    <a routerLink="/products-and-forms/forms/login">Login</a>
+                    <a routerLink="/products-and-forms/forms/register-part-one">Register</a>                
+                </div>
+                <div>
+                    <a routerLink="/products-and-forms/products">Products</a>
+                    <a routerLink="/products-and-forms/products/order">Order</a>                
+                </div>
+                <div>
+                    <a routerLink="/products-and-forms/products/eggs-and-milk">Eggs And Milk</a> 
+                    <a routerLink="/products-and-forms/products/meat-and-fish">Meat And Fish</a>                 
+                </div>
+                <div>
+                    <a routerLink="/products-and-forms/products/vegs-and-fruits">vegetables And Fruits</a> 
+                    <a routerLink="/products-and-forms/products/wine-and-drinks">Wine And Drinks</a>                  
+                </div>   
+                <div>
+                    <a routerLink="/contact-us">Contact Us</a>
+                    <a routerLink="/about-us">About Us</a>                
+                </div>                 
+            </div>  
+        </div>
+        <div class="footer-bottom">
+            <div class="home-footer-left">
+                <h3>Choose Wide</h3>
+                <h4>Abundant Supply To All Your Needs </h4>
+                <p>1 Some St., Some neighborhood
+                    Some Post Code,
+                    +972-999-999-9999
+                    </p>
+            </div> 
+            <div class="home-footer-middle">
+                <h3>All Rights Reserved<fa-icon [icon]="faCopyright" class="all-rights-icon"></fa-icon></h3>
+                <fa-icon [icon]="faInstagram" href="https://www.instagram.com/Henushnush" class="instagram-icon"></fa-icon>
+                <fa-icon [icon]="faFacebook" href="https://www.facebook.com/Henushnush" class="facebook-icon"></fa-icon>
+                <fa-icon [icon]="faLinkedIn" href="https://www.linkedin.com/in/hen-haim-51569315a" class="linkedin-icon"></fa-icon>
+                <fa-icon [icon]="faGithub" href="https://github.com/Hen-Haim" class="github-icon"></fa-icon>
+            </div>  
+            <div class="home-footer-right">
+                <h3>Contact Us:</h3>
+                <input type="text" placeholder="Your Email"/>
+                <textarea placeholder="Your Text"></textarea>
+            </div>
+        </div>
+
+    </footer>
+</div>

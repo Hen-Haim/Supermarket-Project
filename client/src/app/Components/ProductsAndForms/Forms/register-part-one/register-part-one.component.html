@@ -1,0 +1,57 @@
+<div class="register-part-one">
+    <div>
+        <h1>Sign-Up</h1>
+    </div>
+    <form #registerPartOne="ngForm">
+        <div class="register-part-one-buttons">
+            <button type="text">STEP 01</button>         
+            <button type="text">STEP 02</button>             
+        </div>
+        <div class="register-part-one-div-inputs">
+            <div>
+                <fa-icon [icon]="faUser" class="register-part-one-user-icon"></fa-icon>
+                <input type="text" placeholder="Username" [(ngModel)]="this.usersService.registerCompletedDetails.userName" #inputForUserName="ngModel"
+                required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,5}$"
+                name="userName"
+                />                 
+            </div>
+            <div class="div-for-errors">
+                <p *ngIf="inputForUserName.touched && inputForUserName.errors?.required">
+                    Missing - username ( this field is mandatory )
+                </p>
+                <p *ngIf="inputForUserName.touched && inputForUserName.errors?.pattern">
+                    You entered a userName that is not an email
+                </p>                 
+            </div>
+            <div>
+                <fa-icon [icon]="faUnlock" class="register-part-one-password-icon"></fa-icon>
+                <input type="password" placeholder="Password" name="password" minlength="6" maxlength ="9"
+                [(ngModel)]="this.usersService.registerCompletedDetails.password" #inputForPassword="ngModel" required 
+                pattern="[a-z0-9._%+-@#$^&*()]{6,9}$"/>                 
+            </div>
+            <div class="div-for-errors">
+                <p *ngIf="inputForPassword.touched && inputForPassword.errors?.required">
+                    Missing - password ( this field is mandatory )
+                </p>
+                <p *ngIf="inputForPassword.touched && inputForPassword.errors?.pattern">
+                    Your password should be 6 to 9 characters
+                </p>                 
+            </div>
+            <div>
+                <fa-icon [icon]="faLock" class="register-part-one-confirm-password-icon"></fa-icon>
+                <input placeholder="Confirm Password" name="confirmPassword" #inputForConfirmPassword="ngModel"
+                type="password" [(ngModel)]="this.usersService.registerCompletedDetails.confirmPassword"
+                 required pattern = {{this.usersService.registerCompletedDetails.password}}/>                
+            </div>
+            <div class="div-for-errors">
+                <p *ngIf="inputForConfirmPassword.dirty && inputForConfirmPassword.errors?.pattern">
+                    The characters does not match the password
+                </p>                
+            </div>
+        </div>
+        <button type="submit" [disabled]="registerPartOne.form.invalid" value="register"
+        [ngClass]="registerPartOne.form.invalid ? 'can-not-submit-button-register' : 'submit-button-register'"
+         (click)="movingOnToNextPart()">CONTINUE</button> 
+    </form>
+</div>
+

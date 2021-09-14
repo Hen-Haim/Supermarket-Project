@@ -1,0 +1,11 @@
+<div class="popular-card">
+    <div class="popular-card-circle">
+        <div class="popular-card-number">
+            <fa-icon [icon]="faMedal" class="medal-icon"></fa-icon>
+            <p>{{indexOfElement +1}}</p>
+        </div>
+        <div class="popular-card-image">
+            <img [src]="'http://localhost:3001/products/images/{{onePopularItem.picture}}'| images " alt="popular-product-pic">
+        </div>
+    </div>
+</div>

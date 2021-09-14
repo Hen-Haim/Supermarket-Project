@@ -1,0 +1,195 @@
+.contact-us, .app, body, html{
+    height:100vh;
+    width:100%;
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+.contact-us{
+    position: relative;
+    display: grid;
+    grid-template-rows: repeat(12,1fr);
+    grid-template-columns:50% 50%;
+    color:#FDF7DF;
+    font-family: calibri;
+    font-size:1.8vw;
+}
+
+.contact-us-triangular-container{
+    position: relative;
+    grid-row: span 12;
+    grid-column:50%;
+}
+
+.contact-us-triangular{
+    position: absolute;
+    border-top: 22vw solid transparent;
+    border-bottom: 22vw solid transparent;
+    border-left: 50vw solid #385723;
+    top:0;
+}
+
+.contact-us-triangular-content{
+    position: absolute;
+    display:flex;
+    flex-direction: column;
+    top:-7vw;
+    left:-45vw;
+    width:max-content;
+    height:max-content;
+    align-items: center;
+}
+
+.stars-rating{
+    margin: 0 0 0 0;
+    width:max-content;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    flex-flow: row-reverse wrap;
+    cursor: pointer;
+}
+.star-icon1, .star-icon2,.star-icon3,.star-icon4,.star-icon5{
+    color:#FDF7DF;
+    font-size:2.1vw;
+}
+.star1, .star2, .star3,.star4,.star5{
+    height:max-content;
+    width:max-content;
+    z-index: 1;
+    width:2.5vw;
+    height:2.5vw;
+    font-size:2.5vw;
+    text-align: center;
+}
+
+.star-icon{
+    position:absolute;
+    font-size:2.5vw;
+    color:#843c0ca8; 
+    z-index: -1;
+}
+
+.star1:hover .star-icon1,
+.star2:hover ~ .star1>.star-icon1, .star2:hover .star-icon2,
+.star3:hover ~ .star1>.star-icon1, .star3:hover ~ .star2>.star-icon2,.star3:hover .star-icon3,
+.star4:hover ~ .star1>.star-icon1, .star4:hover ~ .star2>.star-icon2, .star4:hover ~ .star3>.star-icon3,.star4:hover .star-icon4,
+.star5:hover ~ .star1>.star-icon1, .star5:hover ~ .star2>.star-icon2, .star5:hover ~ .star3>.star-icon3, .star5:hover ~ .star4>.star-icon4,.star5:hover .star-icon5,
+.star1:focus .star-icon1,
+.star2:focus ~ .star1>.star-icon1, .star2:focus .star-icon2,
+.star3:focus ~ .star1>.star-icon1, .star3:focus ~ .star2>.star-icon2,.star3:focus .star-icon3,
+.star4:focus ~ .star1>.star-icon1, .star4:focus ~ .star2>.star-icon2, .star4:focus ~ .star3>.star-icon3,.star4:focus .star-icon4,
+.star5:focus ~ .star1>.star-icon1, .star5:focus ~ .star2>.star-icon2, .star5:focus ~ .star3>.star-icon3, .star5:focus ~ .star4>.star-icon4,.star5:focus .star-icon5{
+    color:#FFC000;
+}
+
+.contact-us-rectangular{
+    grid-row:span 12;
+    grid-column: 50%;
+    background-color: #385723;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.contact-us-rectangular>h1{
+    margin:1.5rem 1rem;
+    text-shadow: 4px 4px 4px #843c0cc9;  
+    font-size: 2.7rem;
+}
+
+.contact-us-rectangular>div>div>input{
+    height:25px;
+    width:253px;
+    margin:0 0 10px 10px ;
+}
+
+.contact-us-rectangular>div>div>textarea{
+    height:155px;
+    width:253px;
+    margin:0 0 10px 13px ;
+}
+
+.contact-us-post{
+    margin: 40px 0 0 0;
+    width:max-content;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-content: center;
+}
+.contact-us-post>table{
+    text-align:initial;
+    margin:1rem;
+    flex:1;
+    width:100%;
+}
+.contact-us-post>table>tr>th{
+    text-align: left;
+    font-size: 20px;
+}
+
+.contact-us-post>table>tr>td{
+    font-size: 18px;
+}
+
+.contact-us-triangular-text{
+    width:max-content;
+    text-align: center;
+}
+
+.contact-us-triangular-text>h3{
+    font-size:2.3vw;
+    text-shadow: 4px 4px 4px #843c0cc9;
+}
+
+.logo-contact-us{
+    display: flex;
+    flex-direction: column;
+    padding:0;
+    margin:0;
+    text-align: center;
+    margin: 5vh 0 5vh 0 ;
+}
+
+.logo-contact-us>h1 {
+    color:#FFC000;
+    font-size: 2.7rem;
+    margin: 0 ;
+    text-shadow: 4px 4px 4px #843c0cc9;
+}
+
+.logo-contact-us>h2 {
+    color:#FFC000;
+    font-weight: 100;
+    font-family: 'Arial Narrow', Arial, sans-serif;
+    text-shadow: 4px 4px 4px #843c0cc9;
+    margin: 0 ;
+    font-size: 1.7rem;
+}
+
+.faHome-div-contact-us{
+    position: absolute;
+    top: 0;
+    right:0;
+    font-size: 50px;
+    padding:0;
+    border-radius: 5%;
+    background-color: #843c0cc9; 
+}
+
+.home-icon{
+    cursor: pointer;
+}
+
+.home-icon:hover, .faHome-div:hover .home-icon{
+    color:#ffbf0096;
+    transition: 1s;
+}
+.faHome-div-contact-us:hover{
+    background-color: #354152;
+    transition: 1.5s;
+}
+
+

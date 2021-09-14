@@ -1,0 +1,13 @@
+<div class="categories-main-container" *ngIf="this.productsService.productsByCategories[this.productsService.toWhatCategoryShouldIFilter]">
+    <div class="products-nav-bar">
+        <div (click)="filterAllProducts(indexOfElement)" [class]="returnClass(indexOfElement+1)"
+            #navCategories *ngFor="let category of this.productsService.categories; let indexOfElement = index">
+            {{this.productsService.categories[indexOfElement]}}
+        </div>
+    </div>
+    <div class="product-card-container" *ngIf="this.productsService.productsByCategories[this.productsService.toWhatCategoryShouldIFilter]">
+        <app-product-card *ngFor="let product of this.productsService.productsByCategories[this.productsService.toWhatCategoryShouldIFilter]"
+             [product]="product">
+        </app-product-card>
+    </div>
+</div>

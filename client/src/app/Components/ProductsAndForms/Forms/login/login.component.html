@@ -1,0 +1,41 @@
+<div class="login">
+    <div>
+        <h1>Log-In</h1>
+    </div>
+    <form #loginForm="ngForm">
+        <div class="login-div-inputs">
+            <div>
+                <fa-icon [icon]="faUser" class="login-user-icon"></fa-icon>
+                <input type="text" placeholder="Username" [(ngModel)]="userDetailsForLogin.userName" #inputForUserName="ngModel"
+                required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,5}$"
+                name="userName"
+                /> 
+            </div>
+            <div class="div-for-errors">
+                <p *ngIf="inputForUserName.touched && inputForUserName.errors?.required">
+                    Missing - username ( this field is mandatory )
+                </p>
+                <p *ngIf="inputForUserName.touched && inputForUserName.errors?.pattern">
+                    You entered a userName that is not an email
+                </p>                 
+            </div>
+            <div>
+                <fa-icon [icon]="faLock" class="login-password-icon"></fa-icon>
+                <input type="password" placeholder="Password" name="password" minlength="6" maxlength ="9"
+                [(ngModel)]="userDetailsForLogin.password" #inputForPassword="ngModel" required 
+                pattern="[a-z0-9._%+-@#$^&*()]{6,9}$"/>                
+            </div>
+            <div class="div-for-errors">
+                <p *ngIf="inputForPassword.touched && inputForPassword.errors?.required">
+                    Missing - password ( this field is mandatory )
+                </p>
+                <p *ngIf="inputForPassword.touched && inputForPassword.errors?.pattern">
+                    Your password should be 6 to 9 characters
+                </p>                 
+            </div>
+        </div>
+        <button type="submit" [disabled]="loginForm.form.invalid" (click)="login()" value="Login"
+        [ngClass]="loginForm.form.invalid ? 'can-not-submit-button-login' : 'submit-button-login'"
+        >SUBMIT</button>        
+    </form>
+</div>

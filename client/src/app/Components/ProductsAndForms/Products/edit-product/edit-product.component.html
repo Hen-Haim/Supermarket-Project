@@ -1,0 +1,73 @@
+<div class="edit-product" *ngIf="this.isOnInitSetFirst !== undefined">
+    <div>
+        <h1>Editing A Product</h1>
+    </div>
+    <form #editProductForm="ngForm">
+        <div class="edit-product-div-inputs">
+            <div>
+                <fa-icon [icon]="faCarrot" class="edit-product-user-icon"></fa-icon>
+                <input type="text" placeholder="Product Name" [(ngModel)]="updateProductDetails.name" #inputForProductName="ngModel"
+                required pattern="^(\b[A-Z]\w*\s*)+$" [value] = "this.productsService.productDetails.name"
+                name="name"
+                /> 
+            </div>
+            <div class="div-for-errors">
+                <p *ngIf="inputForProductName.touched && inputForProductName.errors?.required">
+                    Missing - product name ( this field is mandatory )
+                </p>
+                <p *ngIf="inputForProductName.touched && inputForProductName.errors?.pattern">
+                    Every first letter on a word needs to be capitalized
+                </p>                 
+            </div>
+            <div>
+                <fa-icon [icon]="faArchive" class="edit-product-user-icon"></fa-icon>
+                <input name="nameCategory" [value] = "this.productsService.productDetails.nameCategory" type="text" [(ngModel)]="updateProductDetails.nameCategory"
+                 #selectForProductCategoryName="ngModel" required [defaultValue]="this.productsService.productDetails.nameCategory">
+            </div>
+            <div class="div-for-errors">
+                <div class="suggestions-div" >
+                    <span>Suggestions:</span>
+                    <select (change)="onChange($event)">
+                        <option  [ngValue]="undefined" selected disabled>Choose A Category...</option>
+                        <option *ngFor="let category of this.productsService.categories">{{category}}</option>
+                    </select>                      
+                </div>
+                <p *ngIf="selectForProductCategoryName.touched && selectForProductCategoryName.errors?.required">
+                    Missing - Category ( this field is mandatory )
+                </p>
+            </div>
+            <div>
+                <fa-icon [icon]="faDollarSign" class="edit-product-password-icon"></fa-icon>
+                <input type="number" placeholder="Price" name="price"
+                [(ngModel)]="updateProductDetails.price" #inputForPrice="ngModel" required 
+                pattern="^[+]?\d+(\.\d{1,2})?$" [value] = "this.productsService.productDetails.price"/>                
+            </div>
+            <div class="div-for-errors">
+                <p *ngIf="inputForPrice.touched && inputForPrice.errors?.required">
+                    Missing - price ( this field is mandatory )
+                </p>
+                <p *ngIf="inputForPrice.touched && inputForPrice.errors?.pattern">
+                    The price should be a positive number and have two decimal places
+                </p>                 
+            </div>
+            <div>
+                <fa-icon [icon]="faImage" class="edit-product-password-icon"></fa-icon>
+                <input type="file" name="picture"
+                pattern="[a-z0-9._%+-@#$^&*()]{6,9}$" />                
+            </div>
+                <!-- picture:   [(ngModel)]="updateProductDetails.picture"  required  #inputForPicture="ngModel"-->
+
+        </div>
+        <button type="submit" [disabled]="editProductForm.form.invalid" (click)="editingProduct()"
+        [ngClass]="editProductForm.form.invalid ? 'can-not-submit-button-edit-product' : 'submit-button-edit-product'"
+        >SUBMIT</button> 
+        <div class="adding-button" *ngIf="this.stateService.addingOrEditing !== 'adding'" (click)="adding()">
+            <div>
+              <p>Add A Product</p>      
+            </div>
+            <div>
+              <fa-icon [icon]="faPlusSquare" class="add-for-admin"></fa-icon>
+            </div>
+          </div>       
+    </form>
+</div>

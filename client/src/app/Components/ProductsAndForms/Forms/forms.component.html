@@ -1,0 +1,79 @@
+<div class="forms">
+    <aside class="form-aside-left">
+        <div *ngIf="formPath.includes('login')">
+            <div class="h6-for-login">
+                <h6>Not Register Yet?</h6>
+                <h6 (click)="changeFormPathToRegister()">Sign-up</h6>        
+            </div>
+            <div class="pictures-login">
+                <img src="../../../../assets/upload/2/green-bell-pepper.jpg" alt="bell-pepper"/>
+                <img src="../../../../assets/upload/2/yellow-bell-pepper.jpg" alt="bell-pepper"/>
+                <img src="../../../../assets/upload/2/red-bell-pepper.jpg" alt="bell-pepper"/>
+            </div>
+        </div>
+        <div *ngIf="!formPath.includes('login')">
+            <div class="h6-for-register">
+                <h6>Already A User?</h6>
+                <h6 (click)="changeFormPathToLogin()">Log-In</h6>
+            </div>
+            <div class="pictures-register">
+                <img src="../../../../assets/upload/2/apricot.jpg" alt="fruits"/>
+                <img src="../../../../assets/upload/2/kiwi.jpg" alt="fruits"/>
+                <img src="../../../../assets/upload/2/orange.jpg" alt="fruits"/>
+                <img src="../../../../assets/upload/2/banana.jpg" alt="fruits"/>
+            </div>
+        </div>
+    </aside>
+    <main class="form-center">
+        <router-outlet></router-outlet>
+    </main>
+    <aside class="form-aside-right">
+        <div class= "faHome-div-forms">
+            <fa-icon [icon]="faHome" routerLink="/home" class="home-icon"></fa-icon>                 
+        </div>
+        <div class="left-side-forms-divs" routerLink="/home">
+            <h6>Home </h6>
+        </div>
+        <div class="left-side-forms-divs" routerLink="/products-and-forms/products/main">
+            <h6>Start Shopping</h6>
+        </div>
+        <div class="left-side-forms-divs" routerLink="/products-and-forms/products/menu">
+            <h6>Choose Category For Shopping</h6>
+        </div>
+        <div class="left-side-forms-divs" routerLink="/products-and-forms/products/main">
+            <h6>Start Shopping</h6>
+        </div>           
+        <div class="left-side-forms-divs" routerLink="/about-us">
+            <h6>About Us</h6>
+        </div>
+        <div class="left-side-forms-divs" routerLink="/contact-us">
+            <h6>Contact US</h6>
+        </div>
+    </aside>
+</div>
+
+<ng-template class="div-for-login" #divForLogin>
+    <div class="h6-for-login">
+        <h6>Not Register Yet?</h6>
+        <h6 routerLink="/products-and-forms/forms/register-part-one">Sign-up</h6>        
+    </div>
+    <div class="pictures-login">
+        <img src="../../../../assets/upload/2/green-bell-pepper.jpg" alt="bell-pepper"/>
+        <img src="../../../../assets/upload/2/yellow-bell-pepper.jpg" alt="bell-pepper"/>
+        <img src="../../../../assets/upload/2/red-bell-pepper.jpg" alt="bell-pepper"/>
+    </div>
+</ng-template>
+
+<ng-template class="div-for-register" #divForRegister>
+    <div class="h6-for-register">
+        <h6>Already A User?</h6>
+        <h6 routerLink="/products-and-forms/forms/login">Log-In</h6>
+    </div>
+    <div class="pictures-register">
+        <img src="../../../../assets/upload/2/apricot.jpg" alt="fruits"/>
+        <img src="../../../../assets/upload/2/kiwi.jpg" alt="fruits"/>
+        <img src="../../../../assets/upload/2/orange.jpg" alt="fruits"/>
+        <img src="../../../../assets/upload/2/banana.jpg" alt="fruits"/>
+    </div>
+</ng-template>
+

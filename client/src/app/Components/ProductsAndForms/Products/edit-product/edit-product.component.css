@@ -1,0 +1,151 @@
+.edit-product{
+    height:100%;
+    width:100%;
+    background-color:#F2F2F2;
+    display: flex;
+    flex-direction: column;
+    border: solid 2px #d6dce596;   
+}
+
+.edit-product>div{
+    flex:1;
+    margin:0;
+    padding:20px;
+    text-align: center;
+    color:black;
+}
+
+.edit-product>div>h1{
+    margin:0;
+    font-size: 30px;
+    font-stretch: extra-expanded;
+    text-shadow: 1px 1px 3px #7c5d49;;
+}
+
+input.ng-dirty.ng-invalid {
+    color: red
+}
+
+form{
+    flex:10;
+    align-items: center;
+    height:50%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.edit-product-div-inputs{
+    margin: 0 0 0 0;
+    align-self: center;
+    width:100%;
+    height:320px;
+    padding-top:20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-product-div-inputs>div:nth-child(1), .edit-product-div-inputs>div:nth-child(3),
+.edit-product-div-inputs>div:nth-child(5), .edit-product-div-inputs>div:nth-child(7){
+    flex:1;
+    margin:7px 0 7px 0 ;
+    color:black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.edit-product-div-inputs>div:nth-child(2), .edit-product-div-inputs>div:nth-child(4),
+.edit-product-div-inputs>div:nth-child(6){
+    flex:1.5;
+
+}
+
+.suggestions-div{
+    margin-bottom:5px;
+    color:green;
+    font-size: 15px;
+}
+
+.edit-product-div-inputs>div>input, .edit-product-div-inputs>div>select{
+    border:solid #b4c7e76b 1px;
+    box-shadow: 3px 3px 8px 1px #843c0c9a ;
+    margin-left:10px ;
+    height:22px;
+    width:75%;
+    background-color: white;
+
+}
+
+.edit-product-user-icon, .edit-product-password-icon{
+    font-size: 22px;
+}
+
+form>button{
+    position: absolute;
+    bottom:0px;
+    right:0px;
+    margin: 0 20px 10px 0 ;
+    padding:10px;
+    color:#fdf7df;
+}
+
+form>.submit-button-edit-product{
+    background-color:#44546A;
+    cursor: pointer;
+}
+
+
+form>.submit-button-edit-product:hover{
+    background-color:#44546a69;   
+}
+
+.can-not-submit-button-edit-product{
+    background-color:#8aa5ca80;
+}
+
+.div-for-errors{
+    display: flex;
+    flex-direction: column;
+}
+
+.div-for-errors p{
+    margin:0;
+    color:red;
+    font-size:13px;
+    font-family:  Arial, sans-serif;
+}
+
+
+.adding-button{
+    position: absolute;
+    left:0px;
+    margin: 0 0 10px 20px ;
+    bottom:0px;
+    display: flex;
+    flex-direction: row;
+    padding:10.5px 7px;
+    font-size: 19px;
+    background-color:#843c0c9a;
+    color:  #fdf7df;
+    box-shadow: 1px 1px 5px 1px rgb(194, 194, 194);
+    width:45%;
+    justify-content: center;
+    align-self: center;
+    cursor: pointer;
+    font: 200 15px Arial;
+   
+}
+
+.adding-button>div, .adding-button>div p{
+    margin:0;
+}
+
+.add-for-admin{
+    margin: 0 0 0 15px ;
+}
+
+.adding-button:hover {
+    color: #fdf7df52;
+}

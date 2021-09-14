@@ -1,0 +1,123 @@
+
+.shopping-cart-card{
+    display: flex;
+    flex-direction: column;
+    color:black;
+    border-bottom: solid 1.2px #b4c7e75d;
+}
+
+.delete-one-product{
+    display: flex;
+    flex-direction: row-reverse;    
+}
+
+.shopping-cart-card-x-icon{
+    margin: 0 10px 0 0;
+    cursor: pointer;
+    font-size: 18px;
+    color:grey;
+}
+.shopping-cart-card-x-icon:hover{
+    color:black; 
+}
+
+.only-when-hover-is-visible{
+    visibility: hidden;
+    width:100%;
+    height:max-content;
+    text-align: center;
+    color:red;
+    font-size: 18px;
+
+}
+/* 
+.delete-one-product:hover ~ .only-when-hover-is-visible{
+    background-color: rgba(107, 107, 107, 0.178);
+    visibility:visible;
+    z-index: 20000;
+    margin:  0 0 0 0;
+
+} */
+
+.shopping-cart-card-main{
+    display: flex;
+    flex-direction: row;  
+    background-color: white;  
+}
+
+.shopping-cart-card-price-and-edit{
+    display: flex;
+    flex-direction: column;
+    margin:0;
+    padding:0 5px 0 18px; 
+    justify-content: center;  
+    width:50px; 
+}
+
+.edit-one-product{
+    margin:0;
+    padding:0;
+    font-size: 25px; 
+    color: #9cabc7;
+    cursor: pointer;
+}
+
+.edit-one-product:hover{
+    color:#3a5386;
+}
+
+.shopping-cart-card-price-and-edit>p{
+    margin:0;
+    padding:0;
+    font-size: 15px;
+}
+
+.dollar-one-product{
+    font-size: 17px;
+    color:rgba(82, 82, 82, 0.945);  
+}
+
+.shopping-cart-card-description{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center; 
+    width:140px;      
+}
+
+.shopping-cart-card-description>p{
+    margin:0;
+    padding:0; 
+    font-size: 15px;
+}
+
+.shopping-cart-card-pic, .shopping-cart-card-pic>img{
+    height:80px;
+    width:80px;
+}
+
+.units-for-cart{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    margin:0;
+    padding:0;
+}
+
+.units-for-cart>p{
+    margin: 0 7px 0 7px ;
+    font-size: 14px;
+}
+
+.add-unit-icon, .remove-unit-icon{
+    background-color: #d18451 ;
+    padding:2px 3px;
+    cursor: pointer;
+    color:#fdf7df;
+}
+
+.add-unit-icon:hover, .remove-unit-icon:hover{
+    background-color: #5c2b0a57 ;
+}

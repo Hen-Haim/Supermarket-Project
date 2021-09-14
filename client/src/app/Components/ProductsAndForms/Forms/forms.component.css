@@ -1,0 +1,111 @@
+.forms{
+    height:74vh;
+    display:flex;
+    flex-direction: row;
+}
+
+.form-aside-left{
+    flex:1;
+    position: relative;
+}
+
+.form-center{
+    flex:2;
+    margin:0;
+    padding:0;
+}
+
+.form-aside-right{
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.pictures-login, .pictures-register{
+    width:100%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position:absolute;
+    bottom:0;  
+}
+
+.h6-for-login, .h6-for-register{
+    width:100%;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    color:black;
+}
+.h6-for-login h6:nth-child(2), .h6-for-register h6:nth-child(2){
+    margin:10px;
+    align-self: center;
+    font-size: 20px;
+    color:#C55A11;
+    cursor: pointer;
+}
+
+.h6-for-login h6:nth-child(2):hover, .h6-for-register h6:nth-child(2):hover{
+    color:#c5591167;
+}
+
+.h6-for-login h6:nth-child(1), .h6-for-register h6:nth-child(1){
+    font-weight: 400;
+    margin:5px;
+    font-size: 17px;
+}
+
+.pictures-register{
+    width:100%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position:absolute;
+    bottom:0;
+}
+
+.faHome-div-forms{
+    padding:0;
+    margin:5vh 0 0 0; 
+    border-radius: 5%;
+    background-color: #843c0cc9; 
+    width:50px;  
+    height:51px; 
+    align-self: center;
+}
+
+.faHome-div-forms:hover{
+    background-color: #354152;
+    transition: 0.5s;
+}
+
+.faHome-div-forms:hover .home-icon{
+    background-color: #354152;
+    transition: 0.5s;
+    font-size: 42px;
+}
+
+.home-icon{
+    font-size:44px;
+    cursor: pointer;
+}
+
+.left-side-forms-divs{
+    border:solid #2f528f1f 2px;
+    background-color: #D6DCE5;
+    margin:5px 0 0 0;
+    color:black;
+    cursor: pointer;
+}
+
+.left-side-forms-divs >h6{
+    margin:15px 0 15px 0;
+}
+
+.left-side-forms-divs:hover, .left-side-forms-divs:hover h6{
+    color:#FDF7DF;
+}
