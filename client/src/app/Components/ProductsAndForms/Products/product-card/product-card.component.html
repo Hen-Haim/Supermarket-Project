@@ -1,18 +1,17 @@
 <div class="product-card" [ngStyle]="{'box-shadow': (product.amount !== 0) && 'inset 2px 2px 42px #d6611354'}">
-
-    <div>
-        <img [src]="'http://localhost:3001/products/images/{{product.picture}}'| images " alt="product-pic">
-    </div>
-    <div>
-        {{product.name}}
-    </div>
-    {{product.price | currency:"USD"}}
-    <div>
-        <mat-icon class="add-unit-icon" (click)="turnModalOn()">remove</mat-icon>
-        <p>Units: {{product.amount}} </p>
-        <mat-icon class="remove-unit-icon" (click)="turnModalOn()">add</mat-icon>
-    </div>
-    <div *ngIf="this.usersService.userDetailsAfterLogin.role ===1">
-        <fa-icon [icon]="faEdit" class="edit-for-admin" (click)="editing()"></fa-icon>
-    </div>    
+  <div>
+    <img [src]="'http://localhost:3001/products/images/' + product.picture" alt="product-pic">
+  </div>
+  <div>
+    {{product.name}}
+  </div>
+  {{product.price | currency:"USD"}}
+  <div>
+    <mat-icon class="add-unit-icon" (click)="turnModalOn()">remove</mat-icon>
+    <p>Units: {{product.amount}} </p>
+    <mat-icon class="remove-unit-icon" (click)="turnModalOn()">add</mat-icon>
+  </div>
+  <div *ngIf="this.usersService.userDetailsAfterLogin.role ===1" (click)="editing()">
+    <fa-icon [icon]="faEdit" class="edit-for-admin"></fa-icon>
+  </div>
 </div>

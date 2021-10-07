@@ -1,6 +1,6 @@
 <div class="category-{{indexOfElement+1}}" (click)="filterProductByCategory(indexOfElement)">
     <div>
-        <img [src]="'http://localhost:3001/products/images/{{indexOfElement+1}}.jpg'| images" alt="category-pic">       
+        <img [src]="'http://localhost:3001/products/images/' + (+indexOfElement+1) + '.jpg'" alt="category-pic">       
         <div class="hover-products">
         <div class="text-hover-product-menu">
             Shop Now<fa-icon [icon]="faArrowCircleRight" class="right-arrow-icon"></fa-icon>

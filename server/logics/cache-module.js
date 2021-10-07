@@ -19,8 +19,6 @@ function clearUserCache(key) {
 
 function extractUserDataFromCache(request) {
     let authorizationString = request.headers["authorization"];
-    console.log("authorizationString", authorizationString);
-
     if(authorizationString !==undefined){
         let token = authorizationString?.substring("Bearer ".length);
         let userData = get(token);  

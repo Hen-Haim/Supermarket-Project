@@ -25,11 +25,9 @@ export class RegisterPartTwoComponent  {
   onChange(optionValue:Event){
     let thisOptionValue = optionValue.target as HTMLTextAreaElement
     this.usersService.registerCompletedDetails.city = thisOptionValue.value;
-    console.log(this.usersService.registerCompletedDetails.city);
   }
 
   registerWithFullDetails(){
-    console.log(this.usersService.registerCompletedDetails);
     this.usersService.registerPart02(this.usersService.registerCompletedDetails).subscribe( resultAfterRegister => {
       this.notifyService.successfulRequest(resultAfterRegister);
     },
@@ -52,9 +50,7 @@ export class RegisterPartTwoComponent  {
       this.stateService.errorMessage(serverError.status);
       this.notifyService.failedRequest(serverError.status , serverError.error.error)
     },
-    () => {
-      this.router.navigate(["/products-and-forms/products"]); 
-    }) 
+    () => this.router.navigate(["/products-and-forms/products"])) 
   }
 
 }

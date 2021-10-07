@@ -1,6 +1,6 @@
 import { ProductsService } from 'src/app/services/products.service';
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,17 +8,14 @@ import { Router } from '@angular/router';
   templateUrl: './category-card.component.html',
   styleUrls: ['./category-card.component.css']
 })
-export class CategoryCardComponent implements OnInit {
+export class CategoryCardComponent {
   @Input() indexOfElement: number;
-  faArrowCircleRight = faArrowCircleRight
+  faArrowCircleRight = faArrowCircleRight;
   
   constructor(
     public productsService:ProductsService,
     private router: Router
     ) { }
-
-  ngOnInit(): void {
-  }
 
   filterProductByCategory(num: number){
     this.productsService.toWhatCategoryShouldIFilter = num;

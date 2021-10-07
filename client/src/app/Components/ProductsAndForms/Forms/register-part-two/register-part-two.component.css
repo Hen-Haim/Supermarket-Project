@@ -41,7 +41,6 @@
     margin:0 10px 0 0 ; 
 }
 
-
 form{
     flex:8;
     align-items: center;
@@ -93,14 +92,6 @@ form{
     font-size: 22px;
 }
 
-/* form>button{
-    position: absolute;
-    padding:10px;
-    background-color:#44546A;
-    color:#fdf7df;
-    cursor: pointer;
-} */
-
 .back-button-register{
     position: absolute;
     bottom:0;
@@ -111,17 +102,6 @@ form{
     color:#fdf7df;
     cursor: pointer;
 }
-/* 
-.submit-button-register{
-    position: absolute;
-    bottom:0;
-    right:0;
-    margin: 0 40px 40px 0 ;
-    padding:10px;
-    background-color:#44546A;
-    color:#fdf7df;
-    cursor: pointer;
-} */
 
 form>button{
     position: absolute;
@@ -156,7 +136,6 @@ form>.submit-button-register{
     background-color:#44546A;
     cursor: pointer;
 }
-
 
 form>.submit-button-register:hover{
     background-color:#44546a69;   

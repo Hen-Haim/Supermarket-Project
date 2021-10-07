@@ -63,24 +63,6 @@ async function login(user) {
     return userLoginResult[0];
 }
 
-// async function update(updateUserDetails){
-//     const sql = `UPDATE users SET password = ?, first_name=?, last_name=? WHERE id = ?;`;
-//     let parameters = [
-//         updateUserDetails.password, 
-//         updateUserDetails.firstName, 
-//         updateUserDetails.lastName, 
-//         updateUserDetails.id
-//     ];
-
-//     try{
-//         let user = await connection.executeWithParameters(sql, parameters);
-//         return user; 
-
-//     }catch(err){
-//         throw new ServerError(ErrorType.GENERAL_ERROR, JSON.stringify(updateUserDetails), err)
-//     }   
-// }
-
 async function getOneUserAddress(userId) {
     let sql = `SELECT city, street FROM users WHERE id=?`;
     let parameters = [userId];
@@ -111,7 +93,6 @@ module.exports = {
     registerPart1,
     registerPart2,
     login,
-    // update,
     getOneUserAddress,
     deleteUser
 }

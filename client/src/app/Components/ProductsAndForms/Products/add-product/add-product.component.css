@@ -117,3 +117,7 @@ form>.submit-button-add-product:hover{
     font-size:13px;
     font-family:  Arial, sans-serif;
 }
+
+.hidden-input{
+    display:none;
+}

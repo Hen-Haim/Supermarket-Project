@@ -5,8 +5,6 @@ const router = express.Router();
 
 //Registration Part 01
 router.post("/", async (req, res, next)=>{
-    console.log('here register 01')
-
     try{
         const userDetails = req.body;
         await usersLogic.registerPart1(userDetails);
@@ -19,7 +17,6 @@ router.post("/", async (req, res, next)=>{
 
 //Registration Part 02
 router.post("/register", async (req, res, next)=>{
-    console.log('here register 02')
     try{
         const userDetails = req.body;
         await usersLogic.registerPart2(userDetails);
@@ -32,14 +29,10 @@ router.post("/register", async (req, res, next)=>{
 
 //Login
 router.post('/login', async (req, res,next) => {
-    console.log('here')
     try {
         const userDetails = req.body;  
         const userDetailsAfterLogin = await usersLogic.login(userDetails);
         userDetailsAfterLogin.userName = req.body.userName
-        //i have : token, role and username in this array
-        //username is necessary so that i can present the user name on the home screen
-        console.log(userDetailsAfterLogin);
         res.json(userDetailsAfterLogin);     
         
     }catch(err){
@@ -59,25 +52,12 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-// //Update
-// router.put("/", async (req, res, next)=>{
-//     try{
-//         const fromCache = cacheModule.extractUserDataFromCache(req);  
-//         const userDetails = req.body;
-//         await usersLogic.update(userDetails,fromCache);
-//         res.json("Updating Your Account, Has Been Saved!");
-
-//     }catch(err){
-//         return next(err);
-//     }
-// });
-
 //Delete
 router.delete('/', async (req, res, next) => {
     try {
         const fromCache = cacheModule.extractUserDataFromCache(req); 
         await usersLogic.deleteUser(fromCache);
-        res.send('Deleting User, Was A Success!');
+        res.json('Deleting User, Was A Success!');
 
     } catch (err) {
         return next(err);

@@ -3,6 +3,7 @@ let ServerError = require("../errors/server-error");
 let ErrorType = require("../errors/error-type");
 
 async function addOrder(orderDetails, fromCache) {
+    orderDetails.cardLastDigits = orderDetails.creditCardNumber % 10000;
     addOrderValidation(orderDetails, fromCache[0].role);
     orderDetails.idUser = fromCache[0].id;
     const orderId = await orderDao.addOrder(orderDetails);
@@ -60,10 +61,6 @@ function addOrderValidation(orderDetails, role) {
 module.exports = {
     addOrder,
     isTheDateAvailable,
-    // updateOrder,
     countProductsUsersAndOrders
-    // ,
-    // userOrders,
-    // deleteOrder
 }
 

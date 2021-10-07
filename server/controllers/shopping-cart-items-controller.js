@@ -38,9 +38,7 @@ router.get('/open-cart/:idShoppingCart', async (req, res, next) => {
     const fromCache = cacheModule.extractUserDataFromCache(req); 
     try {
         const shoppingCartId = +req.params.idShoppingCart;
-        console.log("shoppingCartId", shoppingCartId);
         const shoppingCartItemsOrFalse = await shoppingCartItemsLogic.openCartFromThisUser(fromCache, shoppingCartId);
-        console.log("server until here us fine?")
         res.json(shoppingCartItemsOrFalse);
 
     } catch (err) {
@@ -76,7 +74,7 @@ router.delete('/', async (req, res, next) => {
     const fromCache = cacheModule.extractUserDataFromCache(req); 
     try {
         await shoppingCartItemsLogic.deleteAllShoppingCartItems(fromCache);
-        res.send('Deleting All Items From Cart, Was A Success!');
+        res.json("Deleting All Items From Cart, Was A Success!");
     } catch (err) {
         return next(err);
     }
@@ -87,11 +85,8 @@ router.delete('/', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
     try {
         const shoppingCartItemId = +req.params.id;
-        console.log('from params', shoppingCartItemId);
-        console.log('from params before +', req.params.id);
         await shoppingCartItemsLogic.deleteShoppingCartItem(shoppingCartItemId);
-        console.log("i made it here")
-        res.send('Deleting This Item From Cart, Was A Success!');
+        res.json("Deleting This Item From Cart, Was A Success!");
 
     } catch (err) {
         return next(err);

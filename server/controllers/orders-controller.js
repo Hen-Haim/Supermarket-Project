@@ -31,7 +31,6 @@ router.get("/", async (req, res, next) => {
 router.get("/:date", async (req, res, next) => {
   try {
     const date = req.params.date;
-    console.log("date", date);
     const productsUsersAndOrders = await orderLogic.isTheDateAvailable(date);
     res.json(productsUsersAndOrders);
   } catch (err) {

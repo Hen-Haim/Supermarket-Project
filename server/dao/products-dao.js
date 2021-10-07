@@ -1,63 +1,67 @@
 const connection = require("./connection-wrapper.js");
 let ErrorType = require("../errors/error-type");
 let ServerError = require("../errors/server-error");
-const uuid = require('uuid')
+const uuid = require('uuid');
+const fs = require('fs');
+const path = require("path");
+
 
 async function addProduct(productDetails){
-    if (!fs.existsSync("./images")) fs.mkdirSync("./images");
-    const extension = productDetails.pictureFile.name.substr(productDetails.pictureFile.name.lastIndexOf("."));
-    const fileName = `${uuid.v4()}${extension}`;
-    productDetails.picture = fileName;
-    const absolutePath = path.join(
-        __dirname,
-        "..",
-        "upload",
-        `products`,
-        fileName
-    );
-    await image.mv(absolutePath);
+     try{   
+        if (!fs.existsSync("./images")) fs.mkdirSync("./images");
+        const extension = productDetails.pictureFile.name.substr(productDetails.pictureFile.name.lastIndexOf("."));
+        const fileName = `${uuid.v4()}${extension}`;
+        productDetails.picture = fileName;
 
-    const sql = `INSERT INTO products (id_category, name, price, picture) 
-    VALUES ( (SELECT c.id FROM categories c WHERE c.name = ?) ,?,?,?);`
-    let parameters = [
-        productDetails.nameCategory,
-        productDetails.name,        
-        productDetails.price,
-        productDetails.picture
-    ];
+        const absolutePath = path.join(
+            __dirname,
+            "..",
+            "upload",
+            `products`,
+            fileName
+        );
+        await productDetails.pictureFile.mv(absolutePath);
 
-    try{
+        const sql = `INSERT INTO products (id_category, name, price, picture) 
+        VALUES ( (SELECT c.id FROM categories c WHERE c.name = ?) ,?,?,?);`
+        let parameters = [
+            productDetails.nameCategory,
+            productDetails.name,        
+            productDetails.price,
+            productDetails.picture
+        ];
+
         await connection.executeWithParameters(sql, parameters);
     }catch(err){
-        throw new ServerError(ErrorType.GENERAL_ERROR, JSON.stringify(productDetails), err)
+        throw new ServerError(ErrorType.GENERAL_ERROR, "error", err)
     }
 }
 
 async function updateProduct(updateProductDetails){
-    const extension = productDetails.pictureFile.name.substr(productDetails.pictureFile.name.lastIndexOf("."));
-    const fileName = `${uuid.v4()}${extension}`;
-    productDetails.picture = fileName;
-    const absolutePath = path.join(
-        __dirname,
-        "..",
-        "upload",
-        `products`,
-        fileName
-    );
-    await image.mv(absolutePath);
-    
-    const sql = `UPDATE products SET name=?, 
-    id_category=(SELECT c.id FROM categories c WHERE c.name = ?), 
-    price=?, picture=? WHERE id=?`;
-    let parameters = [
-        updateProductDetails.name,
-        updateProductDetails.nameCategory,
-        updateProductDetails.price,
-        updateProductDetails.picture, 
-        updateProductDetails.idProduct
-    ];
+    try{    
+        const extension = productDetails.pictureFile.name.substr(productDetails.pictureFile.name.lastIndexOf("."));
+        const fileName = `${uuid.v4()}${extension}`;
+        productDetails.picture = fileName;
+        const absolutePath = path.join(
+            __dirname,
+            "..",
+            "upload",
+            `products`,
+            fileName
+        );
+        await image.mv(absolutePath);
+        
+        const sql = `UPDATE products SET name=?, 
+        id_category=(SELECT c.id FROM categories c WHERE c.name = ?), 
+        price=?, picture=? WHERE id=?`;
+        let parameters = [
+            updateProductDetails.name,
+            updateProductDetails.nameCategory,
+            updateProductDetails.price,
+            updateProductDetails.picture, 
+            updateProductDetails.idProduct
+        ];
 
-    try{
         let updatedProduct = await connection.executeWithParameters(sql, parameters);
         return updatedProduct; 
 
@@ -67,8 +71,9 @@ async function updateProduct(updateProductDetails){
 }
 
 async function getAllProducts(shoppingCartId, idFromCache) {
-    console.log(shoppingCartId);
-    console.log("id", idFromCache)
+    if(idFromCache === 1){
+        shoppingCartId = 0;
+    }
     let sql = `SELECT p.id AS idProduct, p.name, p.id_category AS idCategory, 
     ca.name AS nameCategory, p.price, p.picture, 
     COALESCE(sci.amount, 0) AS amount,
@@ -79,16 +84,11 @@ async function getAllProducts(shoppingCartId, idFromCache) {
     LEFT JOIN shopping_carts ON sci.id_shopping_cart = shopping_carts.id && shopping_carts.id_user=?
     GROUP BY case when p.name then shopping_carts.id = ? && p.name else p.name end  
     ORDER BY p.id_category` ;
-    // console.log("sql", sql)
-    console.log("shoppingCartId", shoppingCartId);
-    console.log("idFromCache", idFromCache);
 
     let parameters = [shoppingCartId, idFromCache, shoppingCartId]
 
     try{
         let products = await connection.executeWithParameters(sql, parameters);
-        console.log("products length", products.length);
-        console.log("products ", products[0])
         return products;
 
     }catch(err){
@@ -119,21 +119,9 @@ async function searchProducts(searchDetails) {
     }
 }
 
-// async function deleteProduct(productId) {
-//     let sql = `DELETE FROM products WHERE id=?;`;
-//     let parameters = [productId];
-//     try{
-//         await connection.executeWithParameters(sql, parameters);
-
-//     }catch(err){
-//         throw new ServerError(ErrorType.GENERAL_ERROR, sql, err)
-//     }
-// }
-
 module.exports = {
     addProduct,
     updateProduct,
     getAllProducts,
     searchProducts
-    // deleteProduct
 }

@@ -22,7 +22,7 @@
             <div>
                 <fa-icon [icon]="faArchive" class="edit-product-user-icon"></fa-icon>
                 <input name="nameCategory" [value] = "this.productsService.productDetails.nameCategory" type="text" [(ngModel)]="updateProductDetails.nameCategory"
-                 #selectForProductCategoryName="ngModel" required [defaultValue]="this.productsService.productDetails.nameCategory">
+                 #selectForProductCategoryName="ngModel" required >
             </div>
             <div class="div-for-errors">
                 <div class="suggestions-div" >
@@ -52,11 +52,16 @@
             </div>
             <div>
                 <fa-icon [icon]="faImage" class="edit-product-password-icon"></fa-icon>
-                <input type="file" name="picture"
-                pattern="[a-z0-9._%+-@#$^&*()]{6,9}$" />                
+                <input type="file" name="picture" required accept="image/*" (change) = "pickingAnImage($event)" />        
             </div>
-                <!-- picture:   [(ngModel)]="updateProductDetails.picture"  required  #inputForPicture="ngModel"-->
-
+            <input type="text" name="picture" class="hidden-input"
+                [(ngModel)]="updateProductDetails.picture" #inputForPicture="ngModel" required 
+                [value] = "this.productsService.productDetails.picture"/>                
+            <div class="div-for-errors">
+                <p *ngIf="inputForPicture.errors?.required">
+                    Missing - picture ( adding a file is mandatory )
+                </p>                
+            </div>
         </div>
         <button type="submit" [disabled]="editProductForm.form.invalid" (click)="editingProduct()"
         [ngClass]="editProductForm.form.invalid ? 'can-not-submit-button-edit-product' : 'submit-button-edit-product'"

@@ -43,7 +43,7 @@
       <div>
         <fa-icon [icon]="faCalendarAlt" class="date-order-icon"></fa-icon>
         <input type="date" placeholder="date" name="shippingDate" required (change)="dateAvailability()"
-          [(ngModel)]="this.ordersService.orderDetails.shippingDate" #inputForDate="ngModel" />
+          [(ngModel)]="this.ordersService.orderDetails.shippingDate" #inputForDate="ngModel" [min]="today" />
       </div>
       <div class="div-for-errors">
         <p *ngIf="inputForDate.touched && inputForDate.errors?.required">

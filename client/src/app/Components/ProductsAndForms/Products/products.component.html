@@ -9,6 +9,7 @@
 
 <ng-template #notAdmin>
   <div class="shopping-cart">
+
     <header class="products-cart-header">
       <div class="products-cart-header-div">
         <div class="products-cart-header-hello">
@@ -19,22 +20,26 @@
       </div>
       <h3>Your Shopping Cart</h3>
     </header>
-    <section class="delete-all-products" *ngIf="this.stateService.placeholderText.includes('Search In Products')">
+
+    <section class="delete-all-products" *ngIf="this.stateService.placeholderText.includes('Search In Products')"
+      (click)="activateModalForMessage()" >
       <mat-icon class="remove-all-products">remove_shopping_cart</mat-icon>
       <p>Delete All Products</p>
-    </section>
+    </section>x
+
     <main class="products-cart-main" [ngStyle]="{'display': displayForCart}">
       <app-shopping-cart-card *ngFor="let product of this.shoppingCartItemsService.currentCart"
         [cartItems]="this.shoppingCartItemsService.currentCart" [oneItemOfCart]="product">
       </app-shopping-cart-card>
     </main>
-    <footer class="products-cart-footer">
-      <div class="products-cart-footer-div1" (click)="toggleCart()">
+
+    <footer class="products-cart-footer" *ngIf="this.shoppingCartItemsService.currentCart">
+      <div class="products-cart-footer-div1" (click)="this.displayForCart === 'block' ? this.displayForCart = 'none' :this.displayForCart = 'block'">
         <mat-icon class="arrow-up-products">{{displayForCart==='block' ? 'arrow_drop_up' : 'arrow_drop_down'}}</mat-icon>
       </div>
       <div class="products-cart-footer-div2">
         <mat-icon class="shopping-cart-products">shopping_cart</mat-icon>
-        <div *ngIf ="this.shoppingCartItemsService.currentCart !== undefined">
+        <div *ngIf ="this.shoppingCartItemsService.currentCart[0]?.numOfItems && this.shoppingCartItemsService.currentCart[0]?.numOfItems >0 && this.shoppingCartItemsService.currentCart[0]?.name != '0'">
           <p>{{this.shoppingCartItemsService.currentCart[0]?.numOfItems}}</p>
         </div>
       </div>
@@ -47,6 +52,7 @@
         <p  routerLink="/products-and-forms/products/order">Payment</p>
       </div>
     </footer>
+    
   </div>
 </ng-template>
 

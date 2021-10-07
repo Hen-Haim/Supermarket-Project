@@ -52,9 +52,16 @@
             </div>
             <div>
                 <fa-icon [icon]="faImage" class="add-product-password-icon"></fa-icon>
-                <input name="image" type="file" accept="image/*" required/>                
+                <input name="image" type="file" accept="image/*" required (change)="saveImage($event)"/>                
             </div>
-            <!-- [(ngModel)]="newProductDetails.picture"  required -->
+            <input type="text" name="picture" class="hidden-input"
+                [(ngModel)]="newProductDetails.picture" #inputForPicture="ngModel" required 
+                [value] = "this.productsService.productDetails.picture"/>                
+            <div class="div-for-errors">
+                <p *ngIf="inputForPicture.errors?.required">
+                    Missing - picture ( adding a file is mandatory )
+                </p>                
+            </div>
         </div>
         <button type="submit" [disabled]="addProductForm.form.invalid && selectForProductCategoryName.pristine" (click)="addingNewProduct()"
         [ngClass]="addProductForm.form.invalid ? 'can-not-submit-button-add-product' : 'submit-button-add-product'"

@@ -3,7 +3,6 @@ let ServerError = require("../errors/server-error");
 let ErrorType = require("../errors/error-type");
 
 async function addShoppingCartItem(shoppingCartItemDetails,fromCache) {
-    console.log("shoppingCartItemDetails", shoppingCartItemDetails);
     addAndUpdateShoppingCartItemValidation(shoppingCartItemDetails);
     shoppingCartItemDetails.userId = fromCache[0].id;
     const shoppingCartItemId = await shoppingCartItemsDao.addShoppingCartItem(shoppingCartItemDetails);
@@ -18,7 +17,6 @@ async function updateShoppingCartItems(updateShoppingCartItemDetails) {
 async function openCartFromThisUser(fromCache, shoppingCartId) {
     let allUserShoppingCartItems = await shoppingCartItemsDao.openCartFromThisUser(fromCache[0].id, shoppingCartId);
     if(allUserShoppingCartItems.length >1){
-        // console.log("allUserShoppingCartItems", allUserShoppingCartItems);
         allUserShoppingCartItems.splice(-1);
     }
     return allUserShoppingCartItems;
@@ -35,7 +33,6 @@ async function popularShoppingCartItems() {
 }
 
 async function deleteShoppingCartItem(shoppingCartItemId) {
-    console.log('logic- delete', shoppingCartItemId)
     await shoppingCartItemsDao.deleteShoppingCartItem(shoppingCartItemId);
 }
 

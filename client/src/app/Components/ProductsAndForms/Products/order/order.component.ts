@@ -19,6 +19,7 @@ export class OrderComponent implements OnInit,OnDestroy {
   faShippingFast = faShippingFast;
   cardCompanyInput:string = "";
   isDateAvailable:number = 0;
+  today:string = "";
 
   constructor(
     public usersService: UsersService,
@@ -31,16 +32,15 @@ export class OrderComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
     this.productsService.searchTyping = '';
     this.stateService.placeholderText = 'Search In Cart';
+    this.today = new Date().toISOString().slice(0, 10);
   }
 
   onChange(optionValue:Event){
     let thisOptionValue = optionValue.target as HTMLTextAreaElement
     this.ordersService.orderDetails.cityToDeliver = thisOptionValue.value;
-    console.log(this.ordersService.orderDetails.cityToDeliver);
   }
 
   valueForCardCompany(event: Event){
-    console.log((event.target as HTMLInputElement).value)
     this.cardCompanyInput = (event.target as HTMLInputElement).value;
   }
 
@@ -64,7 +64,6 @@ export class OrderComponent implements OnInit,OnDestroy {
       return pattern
     }
   }
-
   
   activateModalForMessageOrder(){
     this.stateService.modalStatus = "warning for order";
@@ -85,16 +84,12 @@ export class OrderComponent implements OnInit,OnDestroy {
   }
 
   dateAvailability(){
-    console.log(this.ordersService.orderDetails.shippingDate)
     this.ordersService.checkForDateAvailability(this.ordersService.orderDetails.shippingDate).subscribe( dateAvailabilityResults => {
     this.isDateAvailable = dateAvailabilityResults;
     },
     serverError => {
     this.stateService.errorMessage(serverError.status);
     this.notifyService.failedRequest(serverError.status , serverError.error.error)
-    },
-    ()=>{
-      console.log(this.isDateAvailable);
     }) 
   }
 

@@ -11,18 +11,13 @@ import { LoginComponent } from '../Components/ProductsAndForms/Forms/login/login
 import { RegisterPartOneComponent } from '../Components/ProductsAndForms/Forms/register-part-one/register-part-one.component';
 import { RegisterPartTwoComponent } from '../Components/ProductsAndForms/Forms/register-part-two/register-part-two.component';
 import { ProductsAndFormsComponent } from '../Components/ProductsAndForms/products-and-forms.component';
-import { AddProductComponent } from '../Components/ProductsAndForms/Products/add-product/add-product.component';
-import { EditProductComponent } from '../Components/ProductsAndForms/Products/edit-product/edit-product.component';
 import { MainComponent } from '../Components/ProductsAndForms/Products/main/main.component';
 import { OrderComponent } from '../Components/ProductsAndForms/Products/order/order.component';
 import { ProductsComponent } from '../Components/ProductsAndForms/Products/products.component';
 import { SearchComponent } from '../Components/ProductsAndForms/Products/search/search.component';
 
-import { AdminGuard } from '../guards/admin/admin.guard';
-
 const routes: Routes = [
   { path: "home", component: HomeComponent },
-  // { path: "admin", canActivate: [AdminGuard], component: AdminComponent },
   { path: "about-us", component: AboutUsComponent },
   { path: "contact-us", component: ContactUsComponent },
 
@@ -39,9 +34,6 @@ const routes: Routes = [
         { path: "main", component: MainComponent},
         { path: "order", canActivate: [UserGuard], component: OrderComponent},
         { path: "search", component: SearchComponent},
-        // { path: "add-product", canActivate: [AdminGuard], component: AddProductComponent, outlet:"products-aside" },
-        // { path: "edit-product", canActivate: [AdminGuard], component: EditProductComponent, outlet:"products-aside" },
-        // { path: "", component: EditProductComponent, outlet:"products-aside" },
         { path: "", redirectTo: "menu", pathMatch: "full" },
         { path: "products", redirectTo: "menu", pathMatch: "full" },
       ] 

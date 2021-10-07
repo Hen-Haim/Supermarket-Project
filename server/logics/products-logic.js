@@ -52,16 +52,11 @@ function addAndUpdateProductValidation(productDetails, role, file) {
   if (productDetails.price == undefined) {
     throw new ServerError(ErrorType.PRODUCT_PRICE_UNDEFINED);
   }
-
-  // if (productDetails.picture == undefined) {
-  //   throw new ServerError(ErrorType.PRODUCT_PICTURE_UNDEFINED);
-  // }
 }
 
 module.exports = {
   addProduct,
   updateProduct,
   getAllProducts,
-  searchProducts,
-  // deleteProduct
+  searchProducts
 };

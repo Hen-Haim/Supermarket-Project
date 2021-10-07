@@ -5,7 +5,6 @@ import { NotifyService } from './../../services/notify.service';
 import { UsersService } from './../../services/users.service';
 import { PopularAndNew } from './../../models/ShoppingCartItem';
 import { OrdersService } from './../../services/orders.service';
-// import { AppComponent } from './../../app.component';
 import { Component, OnInit } from '@angular/core';
 import { faCopyright, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faGithub, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
@@ -17,7 +16,6 @@ import { Router } from '@angular/router';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  // providers: [AppComponent ]
 })
 export class HomeComponent implements OnInit {
   faUser = faUser;
@@ -47,6 +45,9 @@ export class HomeComponent implements OnInit {
     ) {  }
 
   ngOnInit() {
+    if(this.shoppingCartItemsService.openCart === undefined){
+      this.shoppingCartItemsService.openCart = [{id:0}];
+    }
     this.waitForLogin();
   }
 
@@ -67,28 +68,29 @@ export class HomeComponent implements OnInit {
 
   forHomeButtons(){
     if(this.usersService.userDetailsAfterLogin.role === -1){
-      this.shoppingCartItemsService.openCart[0].numOfItems === 0 ? 
-        this.shoppingCartItemsService.secondButtonForHome = "Shop Now" : 
+      if(this.shoppingCartItemsService.openCart && this.shoppingCartItemsService.openCart[0]?.numOfItems === 0){
+        this.shoppingCartItemsService.secondButtonForHome = "Shop Now"
+      }else{
         this.shoppingCartItemsService.secondButtonForHome = "Continue Shopping";
-      this.shoppingCartItemsService.firstButtonForHome = "Welcome!";
+      }
+      return this.shoppingCartItemsService.firstButtonForHome = "Welcome!";
     }
     if(this.usersService.userDetailsAfterLogin.role === 0){
-      if(this.shoppingCartItemsService.openCart[0].numOfItems === 0){
+      if(this.shoppingCartItemsService.openCart && this.shoppingCartItemsService.openCart[0]?.numOfItems === 0){
         this.shoppingCartItemsService.lastOrder === null ? 
           this.shoppingCartItemsService.firstButtonForHome = "Welcome!" : 
           this.shoppingCartItemsService.firstButtonForHome = "Shop Again";
-        this.shoppingCartItemsService.secondButtonForHome = "Shop Now" ;       
+        return this.shoppingCartItemsService.secondButtonForHome = "Shop Now" ;       
       }else {
         this.shoppingCartItemsService.lastOrder === null ? 
           this.shoppingCartItemsService.firstButtonForHome = "Welcome!" : 
           this.shoppingCartItemsService.firstButtonForHome = `Last purchase: ${this.shoppingCartItemsService.lastOrder[0].orderingDate}`;
-        this.shoppingCartItemsService.secondButtonForHome = "Continue Shopping" 
+        return this.shoppingCartItemsService.secondButtonForHome = "Continue Shopping" 
       }      
     }
-    if(this.usersService.userDetailsAfterLogin.role === 1){
-      this.shoppingCartItemsService.firstButtonForHome = "Welcome" ;
-      this.shoppingCartItemsService.secondButtonForHome = "Go To Products";
-    }
+
+    this.shoppingCartItemsService.firstButtonForHome = "Welcome" ;
+    return this.shoppingCartItemsService.secondButtonForHome = "Go To Products";
   }
 
   countUsersOrdersAndProducts () {
@@ -118,7 +120,6 @@ export class HomeComponent implements OnInit {
   arrangeCategories() {
     this.productsService.getAllProducts().subscribe(
       allProducts => {
-        console.log(allProducts)
         this.productsService.products = allProducts;
         this.productsService.categories = [...new Set(this.productsService.products.map((data: Product) => data.nameCategory)),];
     },
@@ -146,6 +147,8 @@ export class HomeComponent implements OnInit {
     }
     //logout
       localStorage.removeItem("userDetailsAfterLogin");
+      localStorage.removeItem("openCartId");
+      this.shoppingCartItemsService.currentCartId = undefined;
       return window.location.reload();    
   }
 

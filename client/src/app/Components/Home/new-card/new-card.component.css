@@ -10,8 +10,6 @@
     align-content: center;
     box-shadow:-5px -5px 5px 1px rgb(155, 155, 155);
     background-color: #ffffff;
-
-
 }
 
 .new-card-circle{
@@ -20,18 +18,6 @@
     display: flex;
     flex-direction: column;
 }
-
-/* .new-card-rectangular{
-    border-radius: 50%;
-    border: #44546A solid 2px;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-self: center;
-    justify-content: center;
-    align-content: center;
-    text-align: center;
-} */
 
 .new-card-number p{
     margin:0;
@@ -45,7 +31,6 @@
     height: 12vh;
     display: flex;
     align-self: center;
-
 }
 
 .new-card-image img{

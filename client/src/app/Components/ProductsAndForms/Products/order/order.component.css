@@ -1,12 +1,11 @@
 .order-component{
     height:850px;
-    width:47%;
+    width:57%;
     background-color:#fdf7df93;
     display: flex;
     flex-direction: column;
-    margin-left:53%;
+    margin-left:43%;
     color:black;
-
 }
 
 .order-sign{
@@ -16,8 +15,8 @@
     border: #CDB2A3 8px solid;
     position:fixed;
     padding:5px;
-    top:190px;
-    left:300px;
+    top:350px;
+    left:450px;
     background-color: white;
     z-index: 20000;
     text-align: center;
@@ -111,7 +110,6 @@ form{
 }
 
 .order-component-div-inputs-card{
-    /* margin-bottom:100px; */
     display: flex;
     flex-direction: column;    
     margin: 0;
@@ -146,7 +144,6 @@ form{
 }
 
 .credit-card-1-div>div>select:nth-child(2), .credit-card-1-div>div>select:nth-child(1){
-    /* flex:1; */
     border:solid #b4c7e76b 1px;
     box-shadow: 3px 3px 8px 1px #843c0c9a ;
     margin:0 ;
@@ -166,30 +163,10 @@ form{
     flex-direction: row;
     justify-content: space-around;
 }
-/* 
-.credit-card-2-div>div>input{
-    height:22px;
-    width:85%; 
-    border:solid #b4c7e76b 1px;
-    box-shadow: 3px 3px 8px 1px #843c0c9a ;   
-} */
 
 .order-component-user-icon, .order-component-password-icon{
     font-size: 22px;
 }
-
-/* form>button{
-    margin: 20px 0 20px 0 ;
-    padding:10px;
-    background-color:#44546A;
-    color:#fdf7df;
-    cursor: pointer;
-}
-
-
-form>button:hover{
-    background-color:#44546a69;   
-} */
 
 form>button{
     position: absolute;
@@ -226,7 +203,6 @@ form>.submit-button-register{
     background-color:#44546A;
     cursor: pointer;
 }
-
 
 form>.submit-button-register:hover{
     background-color:#44546a69;   

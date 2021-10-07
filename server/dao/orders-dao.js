@@ -31,7 +31,6 @@ async function countProductsUsersAndOrders() {
 
     try{
         let productsUsersAndOrders = await connection.execute(sql);
-        console.log("checking how it returns lalala", productsUsersAndOrders);
         return productsUsersAndOrders;
 
     }catch(err){

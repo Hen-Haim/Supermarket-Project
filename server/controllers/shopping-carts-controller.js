@@ -29,17 +29,5 @@ router.put("/:id", async (req,res, next)=>{
     }
 });
 
-//Delete
-router.delete('/:id', async (req, res, next) => {
-    const fromCache = cacheModule.extractUserDataFromCache(req); 
-    try {
-        const shoppingCartId = +req.params.id;
-        await shoppingCartsLogic.deleteShoppingCart(shoppingCartId, fromCache);
-        res.send('Deleting This Shopping Cart, Was A Success!');
-
-    } catch (err) {
-        return next(err);
-    }
-});
 
 module.exports = router

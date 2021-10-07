@@ -4,8 +4,6 @@ import { StateService } from './../../../services/state.service';
 import { ProductsService } from './../../../services/products.service';
 import { Product } from './../../../models/Product';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { faAngleUp, faDollarSign, faEdit, faShoppingCart, faTimes, faTrash, faUser} 
-from '@fortawesome/free-solid-svg-icons';
 import * as CryptoJS from 'crypto-js';
 import { ShoppingCartItemsService } from 'src/app/services/shoppingCartItems.service';
 import { ShoppingCartService } from 'src/app/services/shoppingCarts.service';
@@ -14,7 +12,6 @@ import { ShoppingCartService } from 'src/app/services/shoppingCarts.service';
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css'],
-  // providers: [AppComponent ]
 })
 export class ProductsComponent implements OnInit {
   displayForCart = 'block';
@@ -38,7 +35,9 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.shoppingCartItemsService.newCartOrOldCart);
+    if(this.shoppingCartItemsService.openCart === undefined){
+      this.shoppingCartItemsService.openCart = [{id:0}];
+    }
     this.waitForLogin();
   }
   
@@ -60,25 +59,23 @@ export class ProductsComponent implements OnInit {
       return this.createNewShoppingCart('last');
 
     } else if (this.shoppingCartItemsService.newCartOrOldCart === '') {
-      if ( this.shoppingCartItemsService.openCart[0]?.numOfItems === 0 ) {
-        console.log(this.shoppingCartItemsService.openCart);
-        return this.createNewShoppingCart('');
+      if ( Object.keys(this.shoppingCartItemsService.openCart[0]).length === 1 || this.shoppingCartItemsService.openCart[0]?.numOfItems === 0 ) {
+        this.createNewShoppingCart('');
+        return 
       }
-      console.log(this.shoppingCartItemsService.openCart);
       this.shoppingCartItemsService.currentCart = this.shoppingCartItemsService.openCart;
     } 
     return this.bringAllProducts();
   }
 
   createNewShoppingCart(isItLastCart: string) {
-    console.log('did i get here?');
-    // return this.bringAllProducts()
     this.shoppingCartService.addNewShoppingCart().subscribe(
       (cartId) => {
-        console.log('here? thats no no');
         this.shoppingCartItemsService.currentCartId = cartId;
         let encryptedShoppingCartId = CryptoJS.AES.encrypt(`${this.shoppingCartItemsService.currentCartId}`,'User Secret Cart').toString();
         localStorage.setItem('openCartId', JSON.stringify(encryptedShoppingCartId));
+       this.shoppingCartItemsService.currentCart = [];
+
       },
       (serverError) => { 
         this.stateService.errorMessage(serverError.status);
@@ -93,19 +90,15 @@ export class ProductsComponent implements OnInit {
     );
   }
 
-
   bringAllProducts() {
     this.productsService.getAllProducts().subscribe(
       allProducts => {
-        console.log(allProducts);
         this.productsService.products = allProducts;
         this.productsService.categories = [...new Set(this.productsService.products.map((data: Product) => data.nameCategory)),];
         for (let i = 0; i < this.productsService.categories.length; i++) {
           this.productsService.productsByCategories[i] =
             this.productsService.products.filter((filterProductsByCategory) => {
-              return (
-                filterProductsByCategory.nameCategory === this.productsService.categories[i]
-              );
+              return ( filterProductsByCategory.nameCategory === this.productsService.categories[i] );
             });
         }
       },
@@ -116,10 +109,10 @@ export class ProductsComponent implements OnInit {
     );
   }
 
-  toggleCart(){
-    if(this.displayForCart === 'block'){
-      return this.displayForCart = 'none';
-    }
-    return this.displayForCart = 'block';
+  activateModalForMessage(){
+    this.stateService.modalStatus = "warning for all products";
+    this.stateService.headerForModal = "Deleting All Products";
+    this.stateService.mainContentForModal = "Are You Sure You Want To Delete All Products From Your Cart?";
+    this.stateService.display = "block"; 
   }
 }

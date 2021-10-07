@@ -7,15 +7,12 @@ import { faMedal } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './popular-card.component.html',
   styleUrls: ['./popular-card.component.css']
 })
-export class PopularCardComponent implements OnInit {
+export class PopularCardComponent{
+  
   @Input() onePopularItem: PopularAndNew = new PopularAndNew();
   @Input() indexOfElement: number;
-
   faMedal = faMedal;
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

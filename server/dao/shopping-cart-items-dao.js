@@ -3,7 +3,6 @@ let ErrorType = require("../errors/error-type");
 let ServerError = require("../errors/server-error");
 
 async function addShoppingCartItem(shoppingCartItemDetails) {
-  console.log("shoppingCartItemDetails", shoppingCartItemDetails);
   const sql = `INSERT INTO shopping_cart_items (id_product, id_shopping_cart, amount, total_price)
         VALUES ( ?, (SELECT id FROM shopping_carts WHERE shopping_carts.id_user = ? AND shopping_carts.id = ?), ?, 
         (SELECT products.price FROM products WHERE products.id = ?) * ?)`;
@@ -46,17 +45,11 @@ async function updateShoppingCartItem(updateShoppingCartItemDetails) {
 
 async function openCartFromThisUser(userId, shoppingCartId) {
   let sql;
-  let conditioningForCartId = "";
-  let conditioningForCartId2 = "";
-  console.log("userId", userId);
-  console.log("shoppingCartId - dao line 52", shoppingCartId);
-  console.log(Object.keys(JSON.stringify(shoppingCartId)).length !== 0);
-  Object.keys(JSON.stringify(shoppingCartId)).length;
+  let conditioningForCartId = "", conditioningForCartId2 = "";
 
   if (userId === -1 && Object.keys(JSON.stringify(shoppingCartId)).length !== 0) {
     conditioningForCartId = `AND sci.id_shopping_cart = ${+shoppingCartId}`;
     conditioningForCartId2 = `shopping_carts.id = ${+shoppingCartId} AND `;
-    console.log("conditioningForCartId2", conditioningForCartId2);
   }
 
   sql = `	(
@@ -64,8 +57,7 @@ async function openCartFromThisUser(userId, shoppingCartId) {
             sci.amount, (products.price*sci.amount) AS totalPrice, shopping_carts.id_user AS idUser,
             sci.id_shopping_cart AS idShoppingCart, products.picture,
             (SELECT COUNT(*) FROM shopping_cart_items WHERE shopping_carts.id = id_shopping_cart) AS numOfItems,
-            (SELECT 
-              SUM(products.price*sci.amount) 
+            (SELECT SUM(products.price*sci.amount) 
               FROM shopping_cart_items sci 
               JOIN shopping_carts ON sci.id_shopping_cart = shopping_carts.id && shopping_carts.id_user=${userId}
               JOIN products ON sci.id_product = products.id
@@ -79,11 +71,10 @@ async function openCartFromThisUser(userId, shoppingCartId) {
             ${conditioningForCartId}
           )
           UNION 
-          (
-            SELECT 0 AS id, 0 AS name, 0 AS idProduct, 0 AS idCategory, 0 AS amount, 0 AS totalPrice, 
+          (SELECT 0 AS id, 0 AS name, 0 AS idProduct, 0 AS idCategory, 0 AS amount, 0 AS totalPrice, 
               0 AS idUser, (SELECT shopping_carts.id FROM shopping_carts 
               LEFT JOIN orders ON shopping_carts.id = orders.id_shopping_cart WHERE orders.ordering_date IS NULL       
-               AND ${conditioningForCartId2} shopping_carts.id_user = ? ) AS idShoppingCart, 0 AS picture,
+               AND ${conditioningForCartId2} shopping_carts.id_user = ? ) AS idShoppingCart, "0.png" AS picture,
                (SELECT COUNT(shopping_carts.id) FROM shopping_carts 
                LEFT JOIN orders ON shopping_carts.id = orders.id_shopping_cart WHERE orders.ordering_date IS NULL       
               AND ${conditioningForCartId2} shopping_carts.id_user = ?) AS numOfItems, 
@@ -95,7 +86,6 @@ async function openCartFromThisUser(userId, shoppingCartId) {
   let parameters = [userId, userId, userId];
   try {
     let openCartItems = await connection.executeWithParameters( sql, parameters );
-    // console.log("dao- openCartItems", openCartItems);
     return openCartItems;
   } catch (err) {
     throw new ServerError(ErrorType.GENERAL_ERROR, sql, err);
@@ -139,7 +129,7 @@ async function popularShoppingCartItems() {
               (SELECT id_category FROM products WHERE shopping_cart_items.id_product = products.id) AS idCategory, 
                   COUNT(id_product) MostPopular FROM shopping_cart_items GROUP BY id_product ORDER BY MostPopular DESC LIMIT 3)
                   UNION
-              (SELECT picture AS picture, id_category AS idCategory, null AS MostPopular FROM products ORDER BY id DESC LIMIT 6)
+              (SELECT picture AS picture, id_category AS idCategory, null AS MostPopular FROM products ORDER BY id DESC LIMIT 7)
               ; `;
 
   try {
@@ -151,8 +141,6 @@ async function popularShoppingCartItems() {
 }
 
 async function deleteShoppingCartItem(shoppingCartItemId) {
-  console.log("dao-delete-one")
-  console.log("shopping cart id", shoppingCartItemId)
   let sql = `DELETE FROM shopping_cart_items WHERE id_product=?;`;
   let parameters = [shoppingCartItemId];
   try {

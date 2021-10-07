@@ -4,7 +4,7 @@ import { ShoppingCartService } from './../../../../services/shoppingCarts.servic
 import { ShoppingCartItemsService } from './../../../../services/shoppingCartItems.service';
 import { UsersService } from './../../../../services/users.service';
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserDetails } from 'src/app/models/UserDetails';
 import { Router } from '@angular/router';
 
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   faUser = faUser;
   faLock = faLock;
   userDetailsForLogin:UserDetails = new UserDetails();
@@ -28,9 +28,6 @@ export class LoginComponent implements OnInit {
     private notifyService: NotifyService,
     private stateService: StateService
   ) { }
-
-  ngOnInit(): void {
-  }
 
   login(): void{
     this.usersService.login(this.userDetailsForLogin).subscribe( resultUserDetailsAfterLogin => {
@@ -48,11 +45,8 @@ export class LoginComponent implements OnInit {
 
   checkAfterLogin(): void{
     let encryptedShoppingCartId = JSON.parse(localStorage.getItem("openCartId") || '{}');
-    // console.log(encryptedShoppingCartId);
-    // console.log(CryptoJS.AES.decrypt(encryptedShoppingCartId, "User Secret Cart").toString(CryptoJS.enc.Utf8));
-    if(this.usersService.userDetailsAfterLogin.role === 1){
-      this.router.navigate(["/products-and-forms/products/main"]);
-    }
+    this.router.navigate(["/products-and-forms/products/main"]);
+    window.location.reload();
     if(Object.keys(encryptedShoppingCartId).length !== 0 && this.usersService.userDetailsAfterLogin.role !== 1){
       this.changingUserIdForCart()
     }
@@ -60,14 +54,16 @@ export class LoginComponent implements OnInit {
 
   changingUserIdForCart(){
     this.shoppingCartService.changeUserIdForShoppingCart(this.shoppingCartItemsService.currentCartId).subscribe( 
-    () => {  },
+    cartId => {
+      this.shoppingCartItemsService.currentCartId = cartId;
+        let encryptedShoppingCartId = CryptoJS.AES.encrypt(`${this.shoppingCartItemsService.currentCartId}`,'User Secret Cart').toString();
+        localStorage.setItem('openCartId', JSON.stringify(encryptedShoppingCartId));
+    },
     serverError => {
       this.stateService.errorMessage(serverError.status);
       this.notifyService.failedRequest(serverError.status , serverError.error.error)
     },
-    () => {
-      this.router.navigate(["/home"]);
-    });    
+    () => this.router.navigate(["/home"]));    
   }
 
 }

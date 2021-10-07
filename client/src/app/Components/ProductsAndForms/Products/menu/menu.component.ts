@@ -19,7 +19,6 @@ export class MenuComponent implements OnInit {
     private stateService: StateService
   ) {}
 
-
   ngAfterContentChecked() {
     this.detectChangesInProducts.detectChanges();
   }
@@ -27,8 +26,6 @@ export class MenuComponent implements OnInit {
   ngOnInit(): void {
     this.productsService.searchTyping = '';
     this.stateService.placeholderText = 'Search In Products';
-    console.log(this.productsService.products)
-    console.log(this.productsService.productsByCategories);
   }
 
 }

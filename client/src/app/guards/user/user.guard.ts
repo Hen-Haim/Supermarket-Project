@@ -2,7 +2,6 @@ import { NotifyService } from './../../services/notify.service';
 import { UserDetailsAfterLogin } from './../../models/UserDetailsAfterLogin';
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'

@@ -1,69 +1,69 @@
 <div [ngStyle]="{'display': this.stateService.display }" class="modal">
-    <ng-container *ngIf="this.stateService.modalStatus === 'product updating' ; then product "></ng-container>
-    <ng-container *ngIf="this.stateService.modalStatus === 'ordering successfully' ; then successOrder"></ng-container>    
-    <ng-container *ngIf="this.stateService.modalStatus.includes('warning') ; then message"></ng-container>      
+  <ng-container *ngIf="this.stateService.modalStatus === 'product updating' ; then product "></ng-container>
+  <ng-container *ngIf="this.stateService.modalStatus === 'ordering successfully' ; then successOrder"></ng-container>
+  <ng-container *ngIf="this.stateService.modalStatus.includes('warning') ; then message"></ng-container>
 </div>
 
-
-  <ng-template #product>
-    <div class="modal-content" *ngIf="this.stateService.productForModal !== undefined">
-        <header class="modal-header">
-            <span (click) = "this.stateService.display = 'none'" class="close">&times;</span>
-            <h1>Adding Or Removing Product</h1>             
-        </header>
-        <main class="modal-main">
-            <div class="product-card" >
-                <div>
-                    <img src="../../../../../assets/upload/{{this.stateService.productForModal?.idCategory}}/{{this.stateService.productForModal?.picture}}" alt="product-pic">
-                </div>
-                <div>
-                    {{this.stateService.productForModal?.name}}
-                </div>
-                <div>
-                    <fa-icon [icon]="faMinus" class="add-unit-icon" (click) = "removingUnits()"></fa-icon>
-                    <p>Units: {{this.stateService.productForModal?.amount}} </p>
-                    <fa-icon [icon]="faPlus" class="remove-unit-icon" (click) = "addingUnits()"></fa-icon>
-                </div> 
-            </div>           
-        </main>
-        <footer class="modal-footer">
-            <button (click) = "saveChangesInModal()">Ok</button>
-            <button (click) = "this.stateService.display = 'none'">Close</button>
-        </footer>
-    </div>
+<ng-template #product>
+  <div class="modal-content" *ngIf="this.stateService.productForModal !== undefined">
+    <header class="modal-header">
+      <span (click)="this.stateService.display = 'none'" class="close">&times;</span>
+      <h1>Adding Or Removing Product</h1>
+    </header>
+    <main class="modal-main">
+      <div class="product-card">
+        <div>
+          <img src="http://localhost:3001/products/images/{{this.stateService.productForModal?.picture}}"
+            alt="product-pic">
+        </div>
+        <div>
+          {{this.stateService.productForModal?.name}}
+        </div>
+        <div>
+          <fa-icon [icon]="faMinus" class="add-unit-icon" (click)="removingUnits()"></fa-icon>
+          <p>Units: {{this.stateService.productForModal?.amount}} </p>
+          <fa-icon [icon]="faPlus" class="remove-unit-icon" (click)="addingUnits()"></fa-icon>
+        </div>
+      </div>
+    </main>
+    <footer class="modal-footer">
+      <button (click)="saveChangesInModal()">Ok</button>
+      <button (click)="this.stateService.display = 'none'">Close</button>
+    </footer>
+  </div>
 </ng-template>
 
 
 <ng-template #message>
-    <div class="modal-content-for-message ">
-        <header class="modal-header-message">
-            <span (click) = "this.stateService.display = 'none'" class="close">&times;</span>              
-            <h2>{{this.stateService.headerForModal}}</h2>  
-        </header>
-        <main class="modal-main-message">
-            <fa-icon [icon]="faExclamationCircle" class="exclamation-icon"></fa-icon>
-            {{this.stateService.mainContentForModal}}
-        </main>
-        <footer class="modal-footer">
-            <button (click) = "switchCasesForModal()">Ok</button> 
-            <button (click) = "this.stateService.display = 'none'">Close</button>
-        </footer>
-    </div>
+  <div class="modal-content-for-message ">
+    <header class="modal-header-message">
+      <span (click)="this.stateService.display = 'none'" class="close">&times;</span>
+      <h2>{{this.stateService.headerForModal}}</h2>
+    </header>
+    <main class="modal-main-message">
+      <fa-icon [icon]="faExclamationCircle" class="exclamation-icon"></fa-icon>
+      {{this.stateService.mainContentForModal}}
+    </main>
+    <footer class="modal-footer">
+      <button (click)="switchCasesForModal()">Ok</button>
+      <button (click)="this.stateService.display = 'none'">Close</button>
+    </footer>
+  </div>
 </ng-template>
 
 
 <ng-template #successOrder>
-    <div class="modal-content-for-message ">
-        <header class="modal-header-message">
-            <span (click) = "this.stateService.display = 'none'" class="close">&times;</span>              
-            <h2>{{this.stateService.headerForModal}}</h2>  
-        </header>
-        <main class="modal-main-message">
-            {{this.stateService.mainContentForModal}}
-        </main>
-        <footer class="modal-footer">
-            <a [href] = "this.url" download="receipt.txt" (click) = "downloadReceipt()">Print Receipt</a>
-            <button (click) = "this.stateService.display = 'none'">Close</button>
-        </footer>
-    </div>
+  <div class="modal-content-for-message ">
+    <header class="modal-header-message">
+      <span (click)="this.stateService.display = 'none'" class="close">&times;</span>
+      <h2>{{this.stateService.headerForModal}}</h2>
+    </header>
+    <main class="modal-main-message">
+      {{this.stateService.mainContentForModal}}
+    </main>
+    <footer class="modal-footer">
+      <a [href]="this.url" download="receipt.txt" (click)="downloadReceipt()">Print Receipt</a>
+      <button (click)="closeSuccessOrder()">Close</button>
+    </footer>
+  </div>
 </ng-template>

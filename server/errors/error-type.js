@@ -30,7 +30,6 @@ let ErrorType = {
     PRODUCT_ID_UNDEFINED : {id: 29, httpCode: 627, message : "Missing a field,  missing value: product's id", isShowStackTrace: false},
     AMOUNT_UNDEFINED : {id: 30, httpCode: 628, message : "Missing a field,  missing value: product's amount", isShowStackTrace: false},
     NOT_A_PICTURE_FILE : {id: 31, httpCode: 629, message : "Your file you send is not a picture file", isShowStackTrace: false}
-
 }
 
 

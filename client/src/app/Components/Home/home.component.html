@@ -18,7 +18,9 @@
             <div class="home-image-text">
                 <h1>Choose Wide</h1>
                 <h2>Abundant Supply To All Your Needs</h2>
-                <button [class]="firstButtonColor" [disabled]="disable()" name={{this.shoppingCartItemsService.firstButtonForHome}} (click) ="choosingAStatusForCart($event)">{{this.shoppingCartItemsService.firstButtonForHome}}</button>
+                <button [class]="firstButtonColor" [disabled]="disable()" name={{this.shoppingCartItemsService.firstButtonForHome}} (click) ="choosingAStatusForCart($event)">
+                    {{this.shoppingCartItemsService.firstButtonForHome}}
+                </button>
                 <button class="shopping-button-1" name={{this.shoppingCartItemsService.secondButtonForHome}} (click) ="choosingAStatusForCart($event)">
                     {{this.shoppingCartItemsService.secondButtonForHome}}
                 </button>

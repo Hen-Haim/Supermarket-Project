@@ -13,7 +13,6 @@ export class Order {
     ){}
 }
 
-
 export class AmountsForHome {
     public constructor(
         public numOfProducts?:number,

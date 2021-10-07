@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from '../app.component';
 import { HomeComponent } from '../Components/Home/home.component';
@@ -30,7 +29,6 @@ import { NewCardComponent } from '../Components/Home/new-card/new-card.component
 import { MatIconModule } from "@angular/material/icon";
 import { MenuComponent } from '../Components/ProductsAndForms/Products/menu/menu.component';
 import { CategoryCardComponent } from '../Components/ProductsAndForms/Products/category-card/category-card.component';
-import { ImagesPipe } from '../pipes/images.pipe';
 
 
 
@@ -58,8 +56,7 @@ import { ImagesPipe } from '../pipes/images.pipe';
     NewCardComponent,
     MenuComponent,
     CategoryCardComponent,
-    HighlightPipe,
-    ImagesPipe
+    HighlightPipe
   ],
   imports: [
     BrowserModule,

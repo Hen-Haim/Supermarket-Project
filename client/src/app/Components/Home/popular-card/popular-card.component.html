@@ -5,7 +5,7 @@
             <p>{{indexOfElement +1}}</p>
         </div>
         <div class="popular-card-image">
-            <img [src]="'http://localhost:3001/products/images/{{onePopularItem.picture}}'| images " alt="popular-product-pic">
+            <img [src]="'http://localhost:3001/products/images/' + onePopularItem.picture" alt="popular-product-pic">
         </div>
     </div>
 </div>

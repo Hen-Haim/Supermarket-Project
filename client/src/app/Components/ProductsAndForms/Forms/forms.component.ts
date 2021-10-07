@@ -1,5 +1,5 @@
 import { ProductsService } from 'src/app/services/products.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 
@@ -8,7 +8,7 @@ import { faHome } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './forms.component.html',
   styleUrls: ['./forms.component.css']
 })
-export class FormsComponent implements OnInit {
+export class FormsComponent {
   formPath:string = window.location.pathname;
   faHome = faHome;
 
@@ -16,9 +16,6 @@ export class FormsComponent implements OnInit {
     private router: Router,
     public productsService: ProductsService
     ) { }
-
-  ngOnInit(): void {
-  }
 
   changeFormPathToRegister(){
     this.router.navigate(["/products-and-forms/forms/register-part-one"]);    

@@ -1,25 +1,25 @@
-<div class="shopping-cart-card">
+<div class="shopping-cart-card" *ngIf = "oneItemOfCart.name !== '0'" >
   <div class="delete-one-product" *ngIf="this.stateService.placeholderText.includes('Search In Products')">
     <fa-icon [icon]="faTimes" class="shopping-cart-card-x-icon" (click)="this.activateModalForMessage()"></fa-icon>
   </div>
   <div class="shopping-cart-card-main">
     <div class="shopping-cart-card-price-and-edit">
-      <fa-icon *ngIf="this.stateService.placeholderText.includes('Search In Products')"
-      [icon]="faEdit" class="edit-one-product" (click)="this.activateModalForProduct()"></fa-icon>
+      <fa-icon *ngIf="this.stateService.placeholderText.includes('Search In Products')" [icon]="faEdit"
+        class="edit-one-product" (click)="this.activateModalForProduct()"></fa-icon>
       <p>
         {{oneItemOfCart.totalPrice | currency:"USD"}}
       </p>
     </div>
     <div class="shopping-cart-card-description">
       <p innerHTML="{{this.stateService.placeholderText.includes('Search In Cart') ? 
-          (oneItemOfCart.name | highlight : this.productsService.searchTyping) : oneItemOfCart.name}}"> 
+          (oneItemOfCart.name | highlight : this.productsService.searchTyping) : oneItemOfCart.name}}">
       </p>
       <div class="units-for-cart">
         <p>Unit {{oneItemOfCart.amount}}</p>
       </div>
     </div>
     <div class="shopping-cart-card-pic">
-      <img [src]="'http://localhost:3001/products/images/{{oneItemOfCart.picture}}'| images " alt="cart-product">
+      <img [src]="'http://localhost:3001/products/images/' + oneItemOfCart.picture" alt="cart-product">
     </div>
   </div>
 </div>

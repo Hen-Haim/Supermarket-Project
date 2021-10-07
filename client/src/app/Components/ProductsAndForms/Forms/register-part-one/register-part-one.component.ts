@@ -23,7 +23,6 @@ export class RegisterPartOneComponent {
   ) { }
 
   movingOnToNextPart(){
-    console.log(this.usersService.registerCompletedDetails);
     this.usersService.registerPart01(this.usersService.registerCompletedDetails).subscribe( 
     () => { },
     serverError => {

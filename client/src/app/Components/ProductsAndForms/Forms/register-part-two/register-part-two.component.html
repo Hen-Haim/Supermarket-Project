@@ -63,8 +63,9 @@
         </div>
         <button routerLink="/products-and-forms/forms/register-part-one" class="back-button-register" type="button">BACK</button>  
         <button type="submit" [disabled]="registerPartTwo.form.invalid" value="register"
-        [ngClass]="registerPartTwo.form.invalid ? 'can-not-submit-button-register' : 'submit-button-register'"
-         (click)="registerWithFullDetails()">SUBMIT</button>        
+            [ngClass]="registerPartTwo.form.invalid ? 'can-not-submit-button-register' : 'submit-button-register'"
+            (click)="registerWithFullDetails()">SUBMIT
+        </button>        
     </form>
 </div>
 

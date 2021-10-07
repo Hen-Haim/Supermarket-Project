@@ -8,7 +8,6 @@ import { ShoppingCartItemsService } from './services/shoppingCartItems.service';
 import * as CryptoJS from 'crypto-js';
 import { ProductsComponent } from './Components/ProductsAndForms/Products/products.component';
 import { HomeComponent } from './Components/Home/home.component';
-import { ProductsService } from './services/products.service';
 import { UserDetails } from './models/UserDetails';
 
 
@@ -24,24 +23,25 @@ export class AppComponent implements OnInit {
   constructor(
     public usersService:UsersService,
     public shoppingCartItemsService: ShoppingCartItemsService,
-    public productsService: ProductsService,
     public notifyService:NotifyService,
     private http: HttpClient,
     private stateService:StateService
     ) { };
 
   ngOnInit(): void {
+    if(this.shoppingCartItemsService.openCart === undefined){
+      this.shoppingCartItemsService.openCart = [{id:0}];
+    }
     this.usersService.userDetailsAfterLogin = JSON.parse(localStorage.getItem("userDetailsAfterLogin") || '{}');
     let encryptedShoppingCartId = JSON.parse(localStorage.getItem("openCartId") || '{}');
-    console.log(encryptedShoppingCartId);
-    console.log(CryptoJS.AES.decrypt(encryptedShoppingCartId, "User Secret Cart").toString(CryptoJS.enc.Utf8));
 
     if(Object.keys(encryptedShoppingCartId).length !== 0){
       this.shoppingCartItemsService.currentCartId = CryptoJS.AES.decrypt(encryptedShoppingCartId, "User Secret Cart").toString(CryptoJS.enc.Utf8);
     }
-    // if role is not registered-user and does not have a cart OR is admin
-    if((this.usersService.userDetailsAfterLogin.role === -1 && this.shoppingCartItemsService.currentCartId === undefined)
-        || (this.usersService.userDetailsAfterLogin.role === 1) ){
+    // if role is unregistered-user and does not have a cart
+    if(this.usersService.userDetailsAfterLogin.role === -1 && this.shoppingCartItemsService.currentCartId === undefined){
+          this.shoppingCartItemsService.openCart[0].numOfItems = 0;
+          this.shoppingCartItemsService.lastOrder = null;
       return
     } 
     //if not logged in
@@ -50,24 +50,27 @@ export class AppComponent implements OnInit {
       this.login(unregisteredUserDetails);  
 
     } else{
-      if(this.usersService.userDetailsAfterLogin?.role ===1){
+    // if role is admin
+      if(this.usersService.userDetailsAfterLogin?.role === 1){
+        this.shoppingCartItemsService.openCart[0].numOfItems = 0;
+        this.shoppingCartItemsService.lastOrder = null;
         return
       }
       this.bringOpenCartItemsIfExist();
     }
   }
 
+  // make a forced login
   public async login(userDetails: UserDetails) {
     try {
       const loggedInUser = await this.http.post<UserDetailsAfterLogin>(this.url, userDetails).toPromise();
       this.usersService.userDetailsAfterLogin = loggedInUser;
       localStorage.setItem("userDetailsAfterLogin", JSON.stringify(loggedInUser));
 
-      console.log(this.shoppingCartItemsService.currentCartId);
       if(this.shoppingCartItemsService.currentCartId === undefined && this.usersService.userDetailsAfterLogin.role ===-1){
         this.shoppingCartItemsService.lastOrder = null;
-        this.shoppingCartItemsService.openCart[0].numOfItems === 0;
-        return  ;
+        this.shoppingCartItemsService.openCart[0].numOfItems = 0;
+        return 
       }     
       this.bringOpenCartItemsIfExist();
     } catch (error) {
@@ -75,7 +78,9 @@ export class AppComponent implements OnInit {
       this.notifyService.failedRequest(error.status , error.error.error)
     }
   } 
-    bringOpenCartItemsIfExist () {
+  
+  //bring all items of open cart if exists
+  bringOpenCartItemsIfExist () {
     this.shoppingCartItemsService.getOpenCartItems().subscribe( openCartItemsIfExist => {
       this.shoppingCartItemsService.openCart = openCartItemsIfExist;
       if(this.shoppingCartItemsService.openCart[0]?.numOfItems !== 0){
@@ -89,21 +94,19 @@ export class AppComponent implements OnInit {
       this.notifyService.failedRequest(serverError.status , serverError.error.error)
     },
     () => {
-      if( this.usersService.userDetailsAfterLogin.role === -1){
-        console.log("suppose to go here 2");
+      if(this.shoppingCartItemsService.currentCartId === undefined && this.usersService.userDetailsAfterLogin.role === -1){
         this.shoppingCartItemsService.lastOrder = null;
-        this.shoppingCartItemsService.openCart[0].numOfItems === 0;
+        this.shoppingCartItemsService.openCart[0].numOfItems = 0;
         return  ;
       } 
       this.bringPastOrderIfExists();
     });  
   }
 
+  //bring all items of the last order if exists
   bringPastOrderIfExists () {
-    console.log(this.shoppingCartItemsService.openCart)
     this.shoppingCartItemsService.getPastOrders().subscribe( lastCartItemsIfExist => {
       this.shoppingCartItemsService.lastOrder = lastCartItemsIfExist;
-      console.log(this.shoppingCartItemsService.lastOrder)
     },
     serverError => {
       this.stateService.errorMessage(serverError.status);
@@ -112,30 +115,3 @@ export class AppComponent implements OnInit {
   }  
 
 }
-
-
-    // var encrypted = CryptoJS.AES.encrypt("13", "User Secret Cart");
-    // //U2FsdGVkX18ZUVvShFSES21qHsQEqZXMxQ9zgHy+bu0=
-    // console.log(encrypted.toString())
-    
-    // var decrypted = CryptoJS.AES.decrypt(encrypted, "User Secret Cart").toString(CryptoJS.enc.Utf8);
-    // //4d657373616765
-    // console.log(decrypted);
-    // // console.log(decrypted.toString(CryptoJS.enc.Utf8));
-
-      // this.usersService.login(unregisteredUserDetails).subscribe( resultUserDetailsAfterLogin => {
-      //   this.usersService.userDetailsAfterLogin = resultUserDetailsAfterLogin;
-      //   localStorage.setItem("userDetailsAfterLogin", JSON.stringify(resultUserDetailsAfterLogin));
-      // },
-      // serverError => {
-      //  this.stateService.errorMessage(serverError.status);
-      //   this.notifyService.failedRequest(serverError.status , serverError.error.error)
-      // },
-      // () => {
-      //   console.log(this.shoppingCartItemsService.currentCartId);
-      //   if(this.shoppingCartItemsService.currentCartId === undefined && this.usersService.userDetailsAfterLogin.role ===-1){
-      //     console.log("suppose to go here");
-      //     return this.shoppingCartItemsService.bringPastOrderIfExists() ;
-      //   }
-      //   this.shoppingCartItemsService.bringOpenCartItemsIfExist();
-      // }) ; 

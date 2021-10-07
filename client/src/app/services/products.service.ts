@@ -1,9 +1,9 @@
+import { NotifyService } from './notify.service';
 import { ShoppingCartItem } from './../models/ShoppingCartItem';
 import { ShoppingCartItemsService } from './shoppingCartItems.service';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { Product } from '../models/Product';
 
 @Injectable({
@@ -18,10 +18,12 @@ export class ProductsService {
   searchResultsServer: Product[] & ShoppingCartItem[] = [];
   toWhatCategoryShouldIFilter: number = 0;
   categories:(string | undefined)[] = [];
+  categoriesPhotos: string[] | undefined;
 
   constructor(
     private http: HttpClient, 
-    public shoppingCartItemsService: ShoppingCartItemsService
+    public shoppingCartItemsService: ShoppingCartItemsService,
+    public notifyService: NotifyService
   ) {
   }
 
@@ -37,18 +39,8 @@ export class ProductsService {
     return this.http.put<string>("http://localhost:3001/products/", this.productDetails);
   }
 
-  addProduct(): Observable<string> {
-    return this.http.post<string>("http://localhost:3001/products", this.productDetails);
-  }
-
-  async getImage(): Promise<any> {
-    try {
-      let results = await this.http.get<Blob>("http://localhost:3001/products/images" + this.productDetails).toPromise(); 
-      return results;
-    } catch (error) {
-      
-    }
-     
+  addProduct(myFormData:FormData): Observable<string> {
+    return this.http.post<string>("http://localhost:3001/products", myFormData);
   }
 
 }

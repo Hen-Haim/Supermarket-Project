@@ -116,7 +116,6 @@ form>.submit-button-register{
     cursor: pointer;
 }
 
-
 form>.submit-button-register:hover{
     background-color:#44546a69;   
 }

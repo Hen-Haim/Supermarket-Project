@@ -14,7 +14,6 @@ export class AuthenticationInterceptor implements HttpInterceptor {
         let token: string | undefined;
         let userDetails:UserDetailsAfterLogin | undefined= JSON.parse(localStorage.getItem("userDetailsAfterLogin") || '{}');
         token = userDetails?.token;
-        console.log("interceptor", token);
 
         if (token !== undefined) {
             request = request.clone({

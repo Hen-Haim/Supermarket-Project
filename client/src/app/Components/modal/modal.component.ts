@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { OrdersService } from './../../services/orders.service';
 import { NotifyService } from './../../services/notify.service';
 import { ProductsComponent } from './../ProductsAndForms/Products/products.component';
-import { AppComponent } from './../../app.component';
 import { ShoppingCartItemsService } from 'src/app/services/shoppingCartItems.service';
 import { Component, OnInit } from '@angular/core';
 import { faPlus, faMinus, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
@@ -28,7 +27,6 @@ export class ModalComponent implements OnInit {
   constructor(
     public stateService: StateService,
     public shoppingCartItemsService: ShoppingCartItemsService,
-    public appComponent:AppComponent,
     public productsComponent: ProductsComponent,
     public productsService: ProductsService,
     private notifyService:NotifyService,
@@ -41,12 +39,14 @@ export class ModalComponent implements OnInit {
   ngOnInit(): void {  }
 
   switchCasesForModal(){
-    console.log('switching here?')
-    if(this.stateService.modalStatus = "warning for product"){
+    if(this.stateService.modalStatus === "warning for product"){
       return this.removingTheProduct();
     }
-    if(this.stateService.modalStatus = "ordering successfully"){
+    if(this.stateService.modalStatus === "ordering successfully"){
       return this.activateModalForSuccessOrder();
+    }
+    if(this.stateService.modalStatus === "warning for all products"){
+      return this.deleteAllItemsFromCart();
     }
     return this.submitOrder();
   }
@@ -59,26 +59,19 @@ export class ModalComponent implements OnInit {
   }
 
   saveChangesInModal(){
-    console.log(this.stateService.productForModal)
     this.stateService.display = "none";
-    console.log("here 0");
     if(this.stateService.productForModal.amount === 0){
-      console.log('here 1')
       return this.activateModalForMessageProducts();
     }
     this.shoppingCartItemsService.currentCart.map( (product, i) => {
       if(product.idProduct === this.stateService.productForModal.idProduct){
-        console.log('here 2')
         if(this.stateService.productForModal.amount === 0){
-          console.log('here 3')
           return this.activateModalForMessageProducts();
         }
-        console.log('here 4')
         return this.updatingTheCart(this.shoppingCartItemsService.currentCart[i].id);
       };
     })
     if(this.shoppingCartItemsService.currentCart.find( product => product.idProduct === this.stateService.productForModal.idProduct) ===undefined){
-      console.log('here 5')
       return this.addingToCart()
     }    
   }
@@ -87,16 +80,15 @@ export class ModalComponent implements OnInit {
     let product = this.stateService.productForModal;
     product.id = num;
     this.shoppingCartItemsService.updateOneCart(product).subscribe( 
-      () => { },
+    () => { },
     serverError => {
       this.stateService.errorMessage(serverError.status);
       this.notifyService.failedRequest(serverError.status , serverError.error.error)
     },
-    () => { this.recreatingThePage()});  
+    () =>  this.recreatingThePage());  
   }
 
   async addingToCart(){
-    console.log(this.stateService.productForModal);
     this.shoppingCartItemsService.addToCart(this.stateService.productForModal).subscribe( 
       () => { },
     serverError => {
@@ -104,40 +96,30 @@ export class ModalComponent implements OnInit {
       this.notifyService.failedRequest(serverError.status , serverError.error.error)
     },
     async () => {
-      console.log(this.stateService.productForModal);
-      console.log(this.productsService.products)
       this.productsService.products.map( (product , i) => {
         if(product.idProduct === this.stateService.productForModal.idProduct){
           this.productsService.products[i].amount = this.stateService.productForModal.amount;
         };
       })
       this.stateService.productForModal.totalPrice = this.stateService.productForModal.amount * +this.stateService.productForModal.price;
-      console.log(this.productsService.products);
       this.shoppingCartItemsService.currentCart[this.shoppingCartItemsService.currentCart.length] = this.stateService.productForModal;
-      console.log(this.productsService.products);
       this.recreatingThePage();
     }); 
   }
 
   async removingTheProduct(){
-    console.log("removing?2")
     this.stateService.display = "none";
     this.stateService.productForModal.amount = 0;
-    console.log(this.stateService.productForModal.idProduct);
     this.shoppingCartItemsService.removeOneItem(this.stateService.productForModal.idProduct).subscribe( 
     () => { },
     serverError => {
-      console.log("server error");
       this.stateService.errorMessage(serverError.status);
       this.notifyService.failedRequest(serverError.status , serverError.error.error)
     },
-    async ()=>{
-      this.recreatingThePage();         
-    }); 
+    async ()=> this.recreatingThePage()); 
   }
 
   async recreatingThePage(){
-    console.log('here right??')
     await this.bringOpenCart();
     await this.bringAllProducts();
     this.shoppingCartItemsService.currentCart = this.shoppingCartItemsService.openCart;
@@ -154,29 +136,26 @@ export class ModalComponent implements OnInit {
   }
 
   async bringOpenCart() {
+    let url = "http://localhost:3001/shopping-cart-items/open-cart/";
     try {
-      let results = await this.http.post<ShoppingCartItem[] & Product[]>("http://localhost:3001/shopping-cart-items/open-cart", {shoppingCartId: `${this.shoppingCartItemsService.currentCartId}`}).toPromise();
+      let results = await this.http.get<ShoppingCartItem[] & Product[]>(url + this.shoppingCartItemsService.currentCartId).toPromise();
         this.shoppingCartItemsService.openCart = results;
-        console.log(this.shoppingCartItemsService.openCart);      
     } catch (error) {
       this.stateService.errorMessage(error.status);
       this.notifyService.failedRequest(error.status , error.error.error)
-      console.log(this.shoppingCartItemsService.openCart)
     };  
   }
 
   async bringAllProducts() {
+    let url = "http://localhost:3001/products/special-get/";
     try {
-      let results =  await this.http.get<Product[]>("http://localhost:3001/products/special-get/" + this.shoppingCartItemsService.currentCartId).toPromise();  
-        console.log(results);
+      let results =  await this.http.get<Product[]>(url + this.shoppingCartItemsService.currentCartId).toPromise();  
         this.productsService.products = results;
         this.productsService.categories = [...new Set(this.productsService.products.map((data: Product) => data.nameCategory)),];
         for (let i = 0; i < this.productsService.categories.length; i++) {
           this.productsService.productsByCategories[i] =
             this.productsService.products.filter((filterProductsByCategory) => {
-              return (
-                filterProductsByCategory.nameCategory === this.productsService.categories[i]
-              );
+              return ( filterProductsByCategory.nameCategory === this.productsService.categories[i] );
             });
         }      
     } catch (error) {
@@ -195,9 +174,8 @@ export class ModalComponent implements OnInit {
     this.stateService.errorMessage(serverError.status);
     this.notifyService.failedRequest(serverError.status , serverError.error.error)
     },
-    () => {
-      this.router.navigate(["/home"]);;
-    }) 
+    () => this.activateModalForSuccessOrder()
+    ) 
   }
 
   activateModalForSuccessOrder(){
@@ -208,16 +186,36 @@ export class ModalComponent implements OnInit {
   }
 
   downloadReceipt(){
+    this.stateService.display = "none";
     let cart = this.shoppingCartItemsService.currentCart;
     let receiptArray = [];
     receiptArray.push('\n \n Your Receipt \n \n')
       for (var i = 0; i < cart.length; i++) {
-      receiptArray.push('\n Name: ' + cart[i].name + '\n')
-      receiptArray.push('\n Amount: ' + cart[i].amount + '\n')
-      receiptArray.push('\n Price: ' + cart[i].totalPrice + '$' +'\n \n')
+      receiptArray.push('\n Name: ' + cart[i].name + '\n\n Amount: ' + cart[i].amount + '\n\n Price: ' + cart[i].totalPrice + '$' +'\n\n')
     };
     receiptArray.push('\n \n Total Price: '+ cart[0].finalPrice)
     const blob = new Blob(receiptArray, { type: 'application/json' });
     this.url = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+    this.router.navigate(["/home"]);
   }
+
+  deleteAllItemsFromCart() {
+    this.stateService.display = "none";
+    this.shoppingCartItemsService.deleteAllItemsOnCart().subscribe(
+      message =>  this.notifyService.successfulRequest(message),
+      serverError => {
+        this.stateService.errorMessage(serverError.status);
+        this.notifyService.failedRequest(serverError.status , serverError.error.error);
+      },
+      () => {
+        this.recreatingThePage();
+        this.shoppingCartItemsService.currentCart = [];
+      }
+    );
+  }
+  closeSuccessOrder(){
+    this.stateService.display = 'none';
+    this.router.navigate(["/home"])    
+  }
+
 }

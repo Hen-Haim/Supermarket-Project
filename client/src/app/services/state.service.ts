@@ -13,7 +13,7 @@ export class StateService {
   headerForModal:string = "";
   mainContentForModal: string = "";
   display: string = "none";
-  modalStatus: string = "";  // "warning for product" "product updating" "warning for order" "ordering successfully"
+  modalStatus: string = "";  // "warning for product" "product updating" "warning for order" "ordering successfully" "warning for all products"
   addingOrEditing: string = "adding";
 
   errorMessage(status: number){

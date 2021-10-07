@@ -1,6 +1,5 @@
 import { StateService } from 'src/app/services/state.service';
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { ShoppingCartItemsService } from 'src/app/services/shoppingCartItems.service';
 import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
